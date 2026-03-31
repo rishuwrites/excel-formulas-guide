@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft Excel — Complete Formula & Feature Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --surface3: #1e2d42;
+  --border: #243047;
+  --accent: #00d4ff;
+  --accent2: #7c3aed;
+  --accent3: #10b981;
+  --accent4: #f59e0b;
+  --accent5: #ef4444;
+  --accent6: #ec4899;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --code-bg: #0d1b2a;
+  --green: #10b981;
+  --yellow: #f59e0b;
+  --red: #ef4444;
+  --purple: #7c3aed;
+  --pink: #ec4899;
+  --cyan: #00d4ff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ── HEADER ── */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,14,26,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 58px;
+}
+.site-header .logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.1rem;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+.site-header .logo span { color: var(--text2); }
+.search-bar {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 14px;
+  width: min(340px, 40vw);
+}
+.search-bar input {
+  background: none; border: none; outline: none;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; width: 100%;
+}
+.search-bar input::placeholder { color: var(--text3); }
+.search-icon { color: var(--text3); font-size: 0.9rem; }
+.header-badge {
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  color: #fff; font-size: 0.7rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.5px;
+}
+
+/* ── LAYOUT ── */
+.layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 58px); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: sticky; top: 58px; height: calc(100vh - 58px);
+  overflow-y: auto; background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 20px 0 40px;
+}
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); }
+
+.sidebar-section { margin-bottom: 6px; }
+.sidebar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; font-weight: 500;
+  color: var(--text3); letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 20px 4px;
+}
+.sidebar-link {
+  display: block; padding: 6px 20px;
+  color: var(--text2); text-decoration: none;
+  font-size: 0.82rem; transition: all 0.15s;
+  border-left: 2px solid transparent;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebar-link:hover { color: var(--accent); border-left-color: var(--accent); background: rgba(0,212,255,0.04); }
+.sidebar-link.active { color: var(--accent); border-left-color: var(--accent); background: rgba(0,212,255,0.07); }
+
+/* ── MAIN CONTENT ── */
+.main-content { padding: 40px 48px 80px; max-width: 1100px; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface3) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 40px 48px;
+  margin-bottom: 48px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(0,212,255,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
+  line-height: 1.15; color: var(--text); margin-bottom: 16px;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { color: var(--text2); font-size: 1rem; max-width: 560px; }
+.hero-stats {
+  display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap;
+}
+.stat { }
+.stat-num {
+  font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+  color: var(--accent); line-height: 1;
+}
+.stat-label { font-size: 0.75rem; color: var(--text3); margin-top: 2px; }
+
+/* ── CATEGORY HEADER ── */
+.cat-header {
+  display: flex; align-items: center; gap: 14px;
+  margin: 48px 0 28px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.cat-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.cat-icon.math { background: linear-gradient(135deg, #1e3a5f, #0891b2); }
+.cat-icon.text { background: linear-gradient(135deg, #1e1b4b, #7c3aed); }
+.cat-icon.datetime { background: linear-gradient(135deg, #1a3a2e, #10b981); }
+.cat-icon.logical { background: linear-gradient(135deg, #3d1f00, #f59e0b); }
+.cat-icon.lookup { background: linear-gradient(135deg, #2d1f3d, #ec4899); }
+.cat-icon.financial { background: linear-gradient(135deg, #1a1f2e, #6366f1); }
+.cat-icon.excel { background: linear-gradient(135deg, #1a2e1a, #22c55e); }
+
+.cat-title {
+  font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
+}
+
+/* ── FORMULA CARD ── */
+.formula-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 20px;
+  overflow: hidden; transition: border-color 0.2s;
+}
+.formula-card:hover { border-color: var(--border); }
+.formula-card:target { border-color: var(--accent); }
+
+.formula-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 22px; cursor: pointer;
+  user-select: none;
+}
+.formula-num {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--text3); padding-top: 3px; min-width: 24px;
+}
+.formula-title-area { flex: 1; }
+.formula-name {
+  font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700;
+  color: var(--text); display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.formula-tag {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.8px;
+  padding: 2px 8px; border-radius: 4px;
+  font-family: 'DM Mono', monospace; text-transform: uppercase;
+}
+.tag-math { background: rgba(8,145,178,0.15); color: #38bdf8; }
+.tag-text { background: rgba(124,58,237,0.15); color: #a78bfa; }
+.tag-date { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+.tag-logical { background: rgba(245,158,11,0.15); color: #fcd34d; }
+.tag-lookup { background: rgba(236,72,153,0.15); color: #f9a8d4; }
+.tag-financial { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+
+.formula-subtitle { font-size: 0.82rem; color: var(--text2); margin-top: 3px; }
+.formula-toggle {
+  color: var(--text3); font-size: 0.8rem; padding-top: 3px;
+  transition: transform 0.2s;
+}
+.formula-card.open .formula-toggle { transform: rotate(180deg); }
+
+.formula-body { display: none; padding: 0 22px 22px; }
+.formula-card.open .formula-body { display: block; }
+
+/* ── SYNTAX BOX ── */
+.syntax-box {
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); border-radius: 8px;
+  padding: 14px 18px; margin: 12px 0;
+  font-family: 'DM Mono', monospace; font-size: 0.85rem;
+  color: var(--cyan); overflow-x: auto; white-space: pre;
+}
+.syntax-box.purple { border-left-color: var(--accent2); color: #a78bfa; }
+.syntax-box.green { border-left-color: var(--accent3); color: #6ee7b7; }
+.syntax-box.yellow { border-left-color: var(--accent4); color: #fcd34d; }
+.syntax-box.pink { border-left-color: var(--accent6); color: #f9a8d4; }
+
+/* ── EXAMPLE TABLE ── */
+.ex-table {
+  width: 100%; border-collapse: collapse; margin: 14px 0;
+  font-size: 0.83rem;
+}
+.ex-table th {
+  background: var(--surface2); color: var(--text2);
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 8px 12px; text-align: left;
+  border: 1px solid var(--border);
+}
+.ex-table td {
+  padding: 7px 12px; border: 1px solid var(--border);
+  color: var(--text);
+}
+.ex-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.ex-table .formula-cell { font-family: 'DM Mono', monospace; color: var(--cyan); font-size: 0.8rem; }
+.ex-table .result-cell { color: var(--green); font-family: 'DM Mono', monospace; font-weight: 500; }
+
+/* ── DESCRIPTION ── */
+.desc { color: var(--text2); font-size: 0.88rem; margin-bottom: 10px; }
+
+/* ── SHORTCUT PILL ── */
+.shortcuts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.kbd {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-bottom: 3px solid var(--border);
+  border-radius: 6px; padding: 3px 9px;
+  font-family: 'DM Mono', monospace; font-size: 0.75rem;
+  color: var(--text2); white-space: nowrap;
+}
+.kbd-label { font-size: 0.78rem; color: var(--text3); align-self: center; }
+
+/* ── TIP BOX ── */
+.tip-box {
+  background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.83rem; color: #a7f3d0;
+}
+.tip-box strong { color: var(--green); }
+
+.warn-box {
+  background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.83rem; color: #fde68a;
+}
+.warn-box strong { color: var(--yellow); }
+
+.info-box {
+  background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 8px; padding: 12px 16px; margin: 12px 0;
+  font-size: 0.83rem; color: #bae6fd;
+}
+.info-box strong { color: var(--cyan); }
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--text3); letter-spacing: 1px; text-transform: uppercase;
+  margin: 14px 0 6px;
+}
+
+/* ── PARAMS ── */
+.params { margin: 10px 0; }
+.param-row {
+  display: grid; grid-template-columns: 130px 1fr;
+  gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.83rem;
+}
+.param-name { font-family: 'DM Mono', monospace; color: var(--cyan); }
+.param-desc { color: var(--text2); }
+
+/* ── EXCEL SECTION CARD ── */
+.excel-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 20px; overflow: hidden;
+}
+.excel-card-header {
+  background: var(--surface2); padding: 16px 22px;
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+}
+.excel-card-header:hover { background: var(--surface3); }
+.excel-card-num {
+  font-family: 'DM Mono', monospace; font-size: 0.75rem;
+  color: var(--accent3); min-width: 28px;
+}
+.excel-card-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+  flex: 1;
+}
+.excel-card-body { display: none; padding: 18px 22px; }
+.excel-card.open .excel-card-body { display: block; }
+
+/* ── FEATURE LIST ── */
+.feature-list { list-style: none; }
+.feature-list li {
+  display: flex; gap: 10px; padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.85rem; color: var(--text2);
+}
+.feature-list li::before {
+  content: '▸'; color: var(--accent3); flex-shrink: 0;
+}
+
+/* ── BACK TO TOP ── */
+.back-top {
+  position: fixed; bottom: 30px; right: 30px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent2); color: #fff;
+  border: none; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+}
+.back-top.visible { opacity: 1; }
+
+/* ── SEARCH HIGHLIGHT ── */
+.hl { background: rgba(245,158,11,0.3); border-radius: 2px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); max-height: 200px; }
+  .main-content { padding: 24px 20px; }
+  .hero { padding: 28px 24px; }
+  .hero h1 { font-size: 1.7rem; }
+  .search-bar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="logo">Excel<span>Ref</span></div>
+  <div class="search-bar">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search formulas, shortcuts..." oninput="doSearch(this.value)">
+  </div>
+  <div class="header-badge">Complete Guide</div>
+</header>
+
+<!-- ── LAYOUT ── -->
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">📐 Math Formulas</div>
+    <a class="sidebar-link" href="#sec-math">All Math Functions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">🔤 Text Formulas</div>
+    <a class="sidebar-link" href="#sec-text">All Text Functions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">📅 Date & Time</div>
+    <a class="sidebar-link" href="#sec-datetime">All Date Functions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">⚡ Logical Functions</div>
+    <a class="sidebar-link" href="#sec-logical">All Logical Functions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">🔍 Lookup & Reference</div>
+    <a class="sidebar-link" href="#sec-lookup">All Lookup Functions</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">💰 Financial</div>
+    <a class="sidebar-link" href="#sec-financial">PMT, PV, FV…</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">📊 Excel Features</div>
+    <a class="sidebar-link" href="#sec-excel">UI & Features Guide</a>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main class="main-content" id="mainContent">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Microsoft Excel — Professional Reference</div>
+  <h1>The <em>Complete</em> Excel Formula &amp; Feature Guide</h1>
+  <p>Every formula explained with syntax, parameters, real examples, and keyboard shortcuts. From basic math to advanced VLOOKUP combinations.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Formulas Covered</div></div>
+    <div class="stat"><div class="stat-num">55</div><div class="stat-label">Excel Features</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Live Examples</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Shortcuts</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          MATH FORMULAS                 -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-math">
+  <div class="cat-icon math">📐</div>
+  <div class="cat-title">Math &amp; Statistical Formulas</div>
+</div>
+
+<!-- 1. SUM -->
+<div class="formula-card open" id="f-sum">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUM <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Adds all numbers in a range or list of values</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">SUM adds together all numbers. You can provide individual cells, ranges, or a mix. One of Excel's most fundamental functions.</p>
+    <div class="section-label">Syntax</div>
+    <div class="syntax-box">=SUM(number1, [number2], ...)</div>
+    <div class="section-label">Parameters</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">number1</span><span class="param-desc">Required. First number, cell, or range to add.</span></div>
+      <div class="param-row"><span class="param-name">number2…</span><span class="param-desc">Optional. Up to 255 additional numbers/ranges.</span></div>
+    </div>
+    <div class="section-label">Examples</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SUM(10, 20, 30)</td><td>Direct values</td><td class="result-cell">60</td></tr>
+      <tr><td class="formula-cell">=SUM(A1:A10)</td><td>Sum a range</td><td class="result-cell">Sum of A1–A10</td></tr>
+      <tr><td class="formula-cell">=SUM(A1:A5, C1:C5)</td><td>Multiple ranges</td><td class="result-cell">Both ranges combined</td></tr>
+      <tr><td class="formula-cell">=SUM(A1:A10)-B1</td><td>Sum minus a value</td><td class="result-cell">Net total</td></tr>
+    </table>
+    <div class="section-label">Keyboard Shortcut</div>
+    <div class="shortcuts"><span class="kbd">Alt</span><span class="kbd-label">+</span><span class="kbd">=</span><span class="kbd-label">Auto-sum selected range</span></div>
+    <div class="tip-box"><strong>💡 Tip:</strong> Select a cell below/beside a column and press Alt+= to instantly insert =SUM() with the range auto-detected.</div>
+  </div>
+</div>
+
+<!-- 2. PRODUCT -->
+<div class="formula-card" id="f-product">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PRODUCT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Multiplies all numbers in a range together</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">PRODUCT multiplies all provided numbers. It ignores text and logical values in ranges.</p>
+    <div class="syntax-box">=PRODUCT(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PRODUCT(2, 3, 4)</td><td>Direct values</td><td class="result-cell">24</td></tr>
+      <tr><td class="formula-cell">=PRODUCT(A1:A5)</td><td>Multiply a range</td><td class="result-cell">A1×A2×A3×A4×A5</td></tr>
+      <tr><td class="formula-cell">=PRODUCT(A1, B1, C1)</td><td>Individual cells</td><td class="result-cell">A1×B1×C1</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 Note:</strong> Equivalent to A1*A2*A3... but much cleaner for many values. Text cells in a range are treated as 1 (neutral).</div>
+  </div>
+</div>
+
+<!-- 3. COUNT -->
+<div class="formula-card" id="f-count">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">COUNT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Counts cells that contain numbers</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">COUNT counts only cells containing numeric values. Ignores text, blanks, and errors.</p>
+    <div class="syntax-box">=COUNT(value1, [value2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data in Range</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=COUNT(A1:A6)</td><td>10, "hello", 30, blank, 50, 70</td><td class="result-cell">4</td></tr>
+      <tr><td class="formula-cell">=COUNT(A1, B1, C1)</td><td>5, "text", 8</td><td class="result-cell">2</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 4. MIN -->
+<div class="formula-card" id="f-min">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MIN <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the smallest number in a range</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">MIN finds the lowest numeric value. Ignores text and blank cells.</p>
+    <div class="syntax-box">=MIN(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MIN(A1:A8)</td><td>45, 12, 78, 3, 55, 99, 21, 6</td><td class="result-cell">3</td></tr>
+      <tr><td class="formula-cell">=MIN(10, 30, 5, 20)</td><td>Direct values</td><td class="result-cell">5</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Use MINIFS (Excel 2019+) to find minimum based on conditions.</div>
+  </div>
+</div>
+
+<!-- 5. MAX -->
+<div class="formula-card" id="f-max">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MAX <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the largest number in a range</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">MAX finds the highest numeric value in a range or list.</p>
+    <div class="syntax-box">=MAX(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MAX(A1:A8)</td><td>45, 12, 78, 3, 55, 99, 21, 6</td><td class="result-cell">99</td></tr>
+      <tr><td class="formula-cell">=MAX(B1:B10, D1:D10)</td><td>Multiple ranges</td><td class="result-cell">Highest across both</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 6. AVERAGE -->
+<div class="formula-card" id="f-average">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">06</span>
+    <div class="formula-title-area">
+      <div class="formula-name">AVERAGE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Calculates the arithmetic mean of a range</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">AVERAGE sums all numbers and divides by the count. Ignores blank cells and text. Be careful — zeros ARE included.</p>
+    <div class="syntax-box">=AVERAGE(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=AVERAGE(10,20,30,40)</td><td>Direct values</td><td class="result-cell">25</td></tr>
+      <tr><td class="formula-cell">=AVERAGE(A1:A10)</td><td>Scores in range</td><td class="result-cell">Sum÷count</td></tr>
+      <tr><td class="formula-cell">=AVERAGE(A1:A5, 100)</td><td>Range + extra value</td><td class="result-cell">Mean of 6 items</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️ Warning:</strong> If the range contains zeros, they pull the average down. Use AVERAGEIF to exclude zeros: =AVERAGEIF(A1:A10,"&lt;&gt;0")</div>
+  </div>
+</div>
+
+<!-- 7. ABS -->
+<div class="formula-card" id="f-abs">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">07</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ABS <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the absolute (positive) value of a number</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">ABS removes the negative sign from a number. Useful for calculating differences, deviations, or any time sign direction doesn't matter.</p>
+    <div class="syntax-box">=ABS(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ABS(-45)</td><td>Negative number</td><td class="result-cell">45</td></tr>
+      <tr><td class="formula-cell">=ABS(45)</td><td>Positive number</td><td class="result-cell">45</td></tr>
+      <tr><td class="formula-cell">=ABS(A1-B1)</td><td>Absolute difference</td><td class="result-cell">|A1−B1|</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 8. FACT -->
+<div class="formula-card" id="f-fact">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">08</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FACT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Calculates the factorial of a number (n!)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">FACT computes n! = n × (n−1) × (n−2) × … × 1. Used in combinatorics and probability calculations.</p>
+    <div class="syntax-box">=FACT(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Math</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FACT(5)</td><td>5×4×3×2×1</td><td class="result-cell">120</td></tr>
+      <tr><td class="formula-cell">=FACT(0)</td><td>0! = 1 by definition</td><td class="result-cell">1</td></tr>
+      <tr><td class="formula-cell">=FACT(10)</td><td>10!</td><td class="result-cell">3628800</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 9. FACTDOUBLE -->
+<div class="formula-card" id="f-factdouble">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">09</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FACTDOUBLE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the double factorial of a number (n!!)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Double factorial multiplies every other integer down to 1 or 2. For odd n: n×(n−2)×…×1; for even n: n×(n−2)×…×2.</p>
+    <div class="syntax-box">=FACTDOUBLE(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Math</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FACTDOUBLE(7)</td><td>7×5×3×1</td><td class="result-cell">105</td></tr>
+      <tr><td class="formula-cell">=FACTDOUBLE(6)</td><td>6×4×2</td><td class="result-cell">48</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 10. SQRT -->
+<div class="formula-card" id="f-sqrt">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">10</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SQRT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the positive square root of a number</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=SQRT(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SQRT(144)</td><td class="result-cell">12</td></tr>
+      <tr><td class="formula-cell">=SQRT(2)</td><td class="result-cell">1.41421356…</td></tr>
+      <tr><td class="formula-cell">=SQRT(A1^2 + B1^2)</td><td class="result-cell">Hypotenuse (Pythagoras)</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> Returns #NUM! for negative numbers. Use =SQRT(ABS(A1)) to avoid errors.</div>
+  </div>
+</div>
+
+<!-- 11. LCM -->
+<div class="formula-card" id="f-lcm">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">11</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LCM <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Least Common Multiple of two or more integers</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=LCM(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=LCM(4, 6)</td><td class="result-cell">12</td></tr>
+      <tr><td class="formula-cell">=LCM(12, 18, 24)</td><td class="result-cell">72</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 12. GCD -->
+<div class="formula-card" id="f-gcd">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">12</span>
+    <div class="formula-title-area">
+      <div class="formula-name">GCD <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Greatest Common Divisor of two or more integers</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=GCD(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=GCD(24, 36)</td><td class="result-cell">12</td></tr>
+      <tr><td class="formula-cell">=GCD(100, 75, 50)</td><td class="result-cell">25</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 13. POWER -->
+<div class="formula-card" id="f-power">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">13</span>
+    <div class="formula-title-area">
+      <div class="formula-name">POWER <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Raises a number to a specified power</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=POWER(number, power)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Equivalent</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=POWER(2, 10)</td><td>2^10</td><td class="result-cell">1024</td></tr>
+      <tr><td class="formula-cell">=POWER(5, 3)</td><td>5³</td><td class="result-cell">125</td></tr>
+      <tr><td class="formula-cell">=POWER(16, 0.5)</td><td>√16</td><td class="result-cell">4</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> You can also use ^ operator: =2^10 gives the same result as =POWER(2,10).</div>
+  </div>
+</div>
+
+<!-- 14. MOD -->
+<div class="formula-card" id="f-mod">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">14</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MOD <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the remainder after division</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">MOD(number, divisor) returns the remainder. Extremely useful for identifying even/odd numbers, cyclic patterns, and row highlighting.</p>
+    <div class="syntax-box">=MOD(number, divisor)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MOD(10, 3)</td><td>10 ÷ 3 = 3 rem 1</td><td class="result-cell">1</td></tr>
+      <tr><td class="formula-cell">=MOD(20, 5)</td><td>No remainder</td><td class="result-cell">0</td></tr>
+      <tr><td class="formula-cell">=MOD(ROW(),2)=0</td><td>Even row check (for conditional formatting)</td><td class="result-cell">TRUE/FALSE</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 15. QUOTIENT -->
+<div class="formula-card" id="f-quotient">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">15</span>
+    <div class="formula-title-area">
+      <div class="formula-name">QUOTIENT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the integer portion of a division</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=QUOTIENT(numerator, denominator)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=QUOTIENT(10, 3)</td><td class="result-cell">3  (discards remainder)</td></tr>
+      <tr><td class="formula-cell">=QUOTIENT(19, 4)</td><td class="result-cell">4</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> Combines with MOD: full answer = QUOTIENT gives whole part, MOD gives remainder. Together they give the full picture of integer division.</div>
+  </div>
+</div>
+
+<!-- 16. SUMPRODUCT -->
+<div class="formula-card" id="f-sumproduct">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">16</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUMPRODUCT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Multiplies corresponding elements in arrays then sums them</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">SUMPRODUCT is one of the most versatile Excel functions. It multiplies corresponding values in arrays then adds the products. Also works as a powerful multi-criteria counter/summer without needing Ctrl+Shift+Enter.</p>
+    <div class="syntax-box">=SUMPRODUCT(array1, [array2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Use Case</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SUMPRODUCT(A1:A5, B1:B5)</td><td>Qty × Price for each row, total</td><td class="result-cell">Weighted total</td></tr>
+      <tr><td class="formula-cell">=SUMPRODUCT((C1:C10="Delhi")*(D1:D10))</td><td>Sum D where C="Delhi"</td><td class="result-cell">Conditional sum</td></tr>
+      <tr><td class="formula-cell">=SUMPRODUCT((A1:A10>50)*1)</td><td>Count values > 50</td><td class="result-cell">Count</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Power Tip:</strong> Use SUMPRODUCT as a multi-condition COUNTIFS/SUMIFS alternative: =SUMPRODUCT((criteria1)*(criteria2)*(values))</div>
+  </div>
+</div>
+
+<!-- 17. COUNTA -->
+<div class="formula-card" id="f-counta">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">17</span>
+    <div class="formula-title-area">
+      <div class="formula-name">COUNTA <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Counts all non-empty cells (including text)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=COUNTA(value1, [value2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=COUNTA(A1:A6)</td><td>10, "hello", blank, 30, "yes", 0</td><td class="result-cell">5  (blank not counted)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> COUNT only counts numbers; COUNTA counts everything except blanks. Use COUNTA for names, IDs, and mixed data.</div>
+  </div>
+</div>
+
+<!-- 18. COUNTBLANK -->
+<div class="formula-card" id="f-countblank">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">18</span>
+    <div class="formula-title-area">
+      <div class="formula-name">COUNTBLANK <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Counts empty cells in a range</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=COUNTBLANK(range)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=COUNTBLANK(A1:A20)</td><td class="result-cell">Number of blank cells in A1:A20</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Use to check data completeness: if COUNTBLANK > 0, some fields are missing.</div>
+  </div>
+</div>
+
+<!-- 19. ROMAN -->
+<div class="formula-card" id="f-roman">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">19</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ROMAN <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Converts a number to Roman numeral text</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=ROMAN(number, [form])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ROMAN(2024)</td><td class="result-cell">MMXXIV</td></tr>
+      <tr><td class="formula-cell">=ROMAN(14)</td><td class="result-cell">XIV</td></tr>
+      <tr><td class="formula-cell">=ROMAN(4)</td><td class="result-cell">IV</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 20. ROUND -->
+<div class="formula-card" id="f-round">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">20</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ROUND <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds a number to a specified number of digits</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">ROUND rounds to the nearest value. Positive num_digits = decimal places; negative = left of decimal point.</p>
+    <div class="syntax-box">=ROUND(number, num_digits)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ROUND(3.14159, 2)</td><td class="result-cell">3.14</td></tr>
+      <tr><td class="formula-cell">=ROUND(3.145, 2)</td><td class="result-cell">3.15</td></tr>
+      <tr><td class="formula-cell">=ROUND(1234, -2)</td><td class="result-cell">1200  (nearest hundred)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 21. ROUNDUP -->
+<div class="formula-card" id="f-roundup">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">21</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ROUNDUP <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Always rounds a number up (away from zero)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=ROUNDUP(number, num_digits)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ROUNDUP(3.001, 2)</td><td class="result-cell">3.01</td></tr>
+      <tr><td class="formula-cell">=ROUNDUP(4.1, 0)</td><td class="result-cell">5</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Use for billing where fractions are always charged up (e.g., shipping boxes, hours billed).</div>
+  </div>
+</div>
+
+<!-- 22. ROUNDDOWN -->
+<div class="formula-card" id="f-rounddown">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">22</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ROUNDDOWN <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Always rounds a number down (toward zero)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=ROUNDDOWN(number, num_digits)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ROUNDDOWN(3.999, 2)</td><td class="result-cell">3.99</td></tr>
+      <tr><td class="formula-cell">=ROUNDDOWN(9.9, 0)</td><td class="result-cell">9</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 23. ODD -->
+<div class="formula-card" id="f-odd">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">23</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ODD <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds up to the nearest odd integer</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=ODD(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ODD(2)</td><td class="result-cell">3</td></tr>
+      <tr><td class="formula-cell">=ODD(3)</td><td class="result-cell">3</td></tr>
+      <tr><td class="formula-cell">=ODD(-2)</td><td class="result-cell">-3  (away from zero)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 24. EVEN -->
+<div class="formula-card" id="f-even">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">24</span>
+    <div class="formula-title-area">
+      <div class="formula-name">EVEN <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds up to the nearest even integer</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=EVEN(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=EVEN(3)</td><td class="result-cell">4</td></tr>
+      <tr><td class="formula-cell">=EVEN(4)</td><td class="result-cell">4</td></tr>
+      <tr><td class="formula-cell">=EVEN(1.5)</td><td class="result-cell">2</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 25. PI -->
+<div class="formula-card" id="f-pi">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">25</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PI <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the value of π (3.14159265358979…)</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=PI()</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PI()</td><td>Returns π</td><td class="result-cell">3.14159265358979</td></tr>
+      <tr><td class="formula-cell">=PI()*A1^2</td><td>Area of circle with radius A1</td><td class="result-cell">Area</td></tr>
+      <tr><td class="formula-cell">=2*PI()*A1</td><td>Circumference</td><td class="result-cell">Circumference</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 26. SUBTOTAL -->
+<div class="formula-card" id="f-subtotal">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">26</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUBTOTAL <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Calculates a subtotal for filtered/visible rows only</div>
+    </div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">SUBTOTAL ignores rows hidden by a filter. The function_num argument determines which calculation to perform.</p>
+    <div class="syntax-box">=SUBTOTAL(function_num, ref1, ...)</div>
+    <table class="ex-table">
+      <tr><th>function_num</th><th>Function</th><th>Includes hidden?</th></tr>
+      <tr><td>1 / 101</td><td>AVERAGE</td><td>1=Yes / 101=No</td></tr>
+      <tr><td>2 / 102</td><td>COUNT</td><td>1=Yes / 102=No</td></tr>
+      <tr><td>9 / 109</td><td>SUM</td><td>9=Yes / 109=No</td></tr>
+      <tr><td>4 / 104</td><td>MAX</td><td>—</td></tr>
+    </table>
+    <table class="ex-table" style="margin-top:8px">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SUBTOTAL(9, A1:A100)</td><td class="result-cell">Sum of visible rows</td></tr>
+      <tr><td class="formula-cell">=SUBTOTAL(102, B1:B50)</td><td class="result-cell">Count of visible numbers</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Use SUBTOTAL with filtered tables — standard SUM would still include hidden rows. SUBTOTAL respects your filter!</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          TEXT FORMULAS                 -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-text">
+  <div class="cat-icon text">🔤</div>
+  <div class="cat-title">Text Formulas</div>
+</div>
+
+<!-- LOWER -->
+<div class="formula-card" id="f-lower">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LOWER <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Converts all letters in text to lowercase</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=LOWER(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=LOWER("Hello World")</td><td>Hello World</td><td class="result-cell">hello world</td></tr>
+      <tr><td class="formula-cell">=LOWER(A1)</td><td>JOHN SMITH</td><td class="result-cell">john smith</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- UPPER -->
+<div class="formula-card" id="f-upper">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">UPPER <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Converts all letters to uppercase</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=UPPER(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=UPPER("hello")</td><td class="result-cell">HELLO</td></tr>
+      <tr><td class="formula-cell">=UPPER(A1)</td><td class="result-cell">Uppercased value</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PROPER -->
+<div class="formula-card" id="f-proper">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PROPER <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Capitalizes the first letter of each word</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=PROPER(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PROPER("john doe")</td><td>john doe</td><td class="result-cell">John Doe</td></tr>
+      <tr><td class="formula-cell">=PROPER("DELHI INDIA")</td><td>DELHI INDIA</td><td class="result-cell">Delhi India</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> PROPER capitalizes after any non-alpha character, so "don't" becomes "Don'T" — be careful with contractions.</div>
+  </div>
+</div>
+
+<!-- LEFT -->
+<div class="formula-card" id="f-left">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LEFT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Extracts a specified number of characters from the left</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=LEFT(text, [num_chars])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=LEFT("Excel", 3)</td><td>Excel</td><td class="result-cell">Exc</td></tr>
+      <tr><td class="formula-cell">=LEFT(A1, 6)</td><td>INV-001-2024</td><td class="result-cell">INV-00</td></tr>
+      <tr><td class="formula-cell">=LEFT(A1, FIND("-",A1)-1)</td><td>Dynamic: up to "-"</td><td class="result-cell">INV</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="formula-card" id="f-right">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">RIGHT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Extracts characters from the right side of text</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=RIGHT(text, [num_chars])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=RIGHT("Excel2024", 4)</td><td>Excel2024</td><td class="result-cell">2024</td></tr>
+      <tr><td class="formula-cell">=RIGHT(A1, 5)</td><td>Delhi-110001</td><td class="result-cell">10001</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- MID -->
+<div class="formula-card" id="f-mid">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">06</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MID <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Extracts characters from the middle of text</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=MID(text, start_num, num_chars)</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">text</span><span class="param-desc">The source text string</span></div>
+      <div class="param-row"><span class="param-name">start_num</span><span class="param-desc">Position to start extraction (1 = first char)</span></div>
+      <div class="param-row"><span class="param-name">num_chars</span><span class="param-desc">Number of characters to extract</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MID("ABCDEF", 3, 2)</td><td>ABCDEF</td><td class="result-cell">CD</td></tr>
+      <tr><td class="formula-cell">=MID("INV-001-2024", 5, 3)</td><td>INV-001-2024</td><td class="result-cell">001</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TRIM -->
+<div class="formula-card" id="f-trim">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">07</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TRIM <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Removes extra spaces, leaving single spaces between words</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=TRIM(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TRIM("  Hello   World  ")</td><td>Multiple spaces</td><td class="result-cell">"Hello World"</td></tr>
+      <tr><td class="formula-cell">=TRIM(A1)</td><td>Messy imported data</td><td class="result-cell">Clean text</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Essential:</strong> Always use TRIM on data imported from other systems — leading/trailing spaces cause VLOOKUP failures!</div>
+  </div>
+</div>
+
+<!-- REPT -->
+<div class="formula-card" id="f-rept">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">08</span>
+    <div class="formula-title-area">
+      <div class="formula-name">REPT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Repeats text a specified number of times</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=REPT(text, number_times)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=REPT("*", 5)</td><td class="result-cell">*****</td></tr>
+      <tr><td class="formula-cell">=REPT("▓", A1)</td><td class="result-cell">In-cell bar chart based on A1 value</td></tr>
+      <tr><td class="formula-cell">=REPT("-", 30)</td><td class="result-cell">Separator line of 30 dashes</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="formula-card" id="f-search">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">09</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SEARCH <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Finds position of text (case-insensitive, supports wildcards)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=SEARCH(find_text, within_text, [start_num])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SEARCH("ex", "Excel")</td><td class="result-cell">1  (case-insensitive)</td></tr>
+      <tr><td class="formula-cell">=SEARCH("20?4", "Excel2024")</td><td class="result-cell">6  (wildcard ? = any char)</td></tr>
+      <tr><td class="formula-cell">=ISNUMBER(SEARCH("error",A1))</td><td class="result-cell">TRUE if "error" found in A1</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 SEARCH vs FIND:</strong> SEARCH is case-INsensitive and supports wildcards (* ?). FIND is case-sensitive and no wildcards.</div>
+  </div>
+</div>
+
+<!-- FIND -->
+<div class="formula-card" id="f-find">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">10</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FIND <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Finds position of text (case-sensitive, exact match)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=FIND(find_text, within_text, [start_num])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FIND("E", "Excel")</td><td class="result-cell">1</td></tr>
+      <tr><td class="formula-cell">=FIND("e", "Excel")</td><td class="result-cell">4  (lowercase e)</td></tr>
+      <tr><td class="formula-cell">=MID(A1, FIND(" ",A1)+1, 100)</td><td class="result-cell">Extract text after first space</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- REPLACE -->
+<div class="formula-card" id="f-replace">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">11</span>
+    <div class="formula-title-area">
+      <div class="formula-name">REPLACE <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Replaces characters at a specific position in text</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=REPLACE(old_text, start_num, num_chars, new_text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=REPLACE("ABCDEF", 3, 2, "XX")</td><td class="result-cell">ABXXEF</td></tr>
+      <tr><td class="formula-cell">=REPLACE("9876543210", 1, 6, "XXXXXX")</td><td class="result-cell">XXXXXX3210  (mask phone)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SUBSTITUTE -->
+<div class="formula-card" id="f-substitute">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">12</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUBSTITUTE <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Replaces specific text with new text</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=SUBSTITUTE(text, old_text, new_text, [instance_num])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SUBSTITUTE("Hello World","World","Excel")</td><td class="result-cell">Hello Excel</td></tr>
+      <tr><td class="formula-cell">=SUBSTITUTE("1,234,567",",","")</td><td class="result-cell">1234567  (remove commas)</td></tr>
+      <tr><td class="formula-cell">=SUBSTITUTE("aaa","a","b",2)</td><td class="result-cell">aba  (replace 2nd occurrence only)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> SUBSTITUTE is content-based; REPLACE is position-based. Use SUBSTITUTE when you know what to replace, REPLACE when you know where.</div>
+  </div>
+</div>
+
+<!-- CHAR -->
+<div class="formula-card" id="f-char">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">13</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CHAR <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Returns the character for a given ASCII code number</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=CHAR(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CHAR(65)</td><td class="result-cell">A</td></tr>
+      <tr><td class="formula-cell">=CHAR(97)</td><td class="result-cell">a</td></tr>
+      <tr><td class="formula-cell">=CHAR(10)</td><td class="result-cell">Line break (use with Wrap Text)</td></tr>
+      <tr><td class="formula-cell">=A1&CHAR(10)&B1</td><td class="result-cell">Combine with line break</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CODE -->
+<div class="formula-card" id="f-code">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">14</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CODE <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Returns the ASCII code number of the first character</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=CODE(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CODE("A")</td><td class="result-cell">65</td></tr>
+      <tr><td class="formula-cell">=CODE("a")</td><td class="result-cell">97</td></tr>
+      <tr><td class="formula-cell">=CODE("Excel")</td><td class="result-cell">69  (only first character "E")</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CONCATENATE -->
+<div class="formula-card" id="f-concatenate">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">15</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CONCATENATE / CONCAT / &amp; <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Joins multiple text strings into one</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=CONCATENATE(text1, [text2], ...)
+=CONCAT(text1, [text2], ...)       ← Modern Excel
+=A1 & " " & B1                    ← & operator (simplest)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>A1="John" B1="Doe"</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CONCATENATE(A1," ",B1)</td><td>John, Doe</td><td class="result-cell">John Doe</td></tr>
+      <tr><td class="formula-cell">=A1&" "&B1</td><td>John, Doe</td><td class="result-cell">John Doe</td></tr>
+      <tr><td class="formula-cell">=A1&" — "&TEXT(B1,"#,##0")</td><td>John, 50000</td><td class="result-cell">John — 50,000</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Excel 2019+:</strong> Use TEXTJOIN for joining with a delimiter: =TEXTJOIN(", ", TRUE, A1:A10)</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          DATE & TIME                   -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-datetime">
+  <div class="cat-icon datetime">📅</div>
+  <div class="cat-title">Date &amp; Time Formulas</div>
+</div>
+
+<!-- DATE -->
+<div class="formula-card" id="f-date">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DATE <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Creates a date from separate year, month, day values</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=DATE(year, month, day)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DATE(2024, 3, 15)</td><td class="result-cell">15-Mar-2024</td></tr>
+      <tr><td class="formula-cell">=DATE(A1, B1, C1)</td><td class="result-cell">Date from three cells</td></tr>
+      <tr><td class="formula-cell">=DATE(2024, 13, 1)</td><td class="result-cell">01-Jan-2025  (overflows)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DAY, MONTH, YEAR -->
+<div class="formula-card" id="f-day-month-year">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02–04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DAY / MONTH / YEAR <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Extracts day, month, or year component from a date</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=DAY(date)    =MONTH(date)    =YEAR(date)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input (A1 = 25-Dec-2024)</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DAY(A1)</td><td>25-Dec-2024</td><td class="result-cell">25</td></tr>
+      <tr><td class="formula-cell">=MONTH(A1)</td><td>25-Dec-2024</td><td class="result-cell">12</td></tr>
+      <tr><td class="formula-cell">=YEAR(A1)</td><td>25-Dec-2024</td><td class="result-cell">2024</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- HOUR, MINUTE, SECOND -->
+<div class="formula-card" id="f-hour-minute-second">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05–07</span>
+    <div class="formula-title-area">
+      <div class="formula-name">HOUR / MINUTE / SECOND <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Extracts time components from a time value</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=HOUR(time)    =MINUTE(time)    =SECOND(time)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input (A1 = 14:35:22)</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=HOUR(A1)</td><td>14:35:22</td><td class="result-cell">14</td></tr>
+      <tr><td class="formula-cell">=MINUTE(A1)</td><td>14:35:22</td><td class="result-cell">35</td></tr>
+      <tr><td class="formula-cell">=SECOND(A1)</td><td>14:35:22</td><td class="result-cell">22</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TODAY / NOW -->
+<div class="formula-card" id="f-today-now">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">08–09</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TODAY / NOW <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns the current date / date and time</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=TODAY()    =NOW()</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result (recalculates each open)</th></tr>
+      <tr><td class="formula-cell">=TODAY()</td><td class="result-cell">Current date only (e.g., 30/03/2026)</td></tr>
+      <tr><td class="formula-cell">=NOW()</td><td class="result-cell">Current date + time</td></tr>
+      <tr><td class="formula-cell">=TODAY()-A1</td><td class="result-cell">Days since date in A1</td></tr>
+      <tr><td class="formula-cell">=YEAR(TODAY())-YEAR(A1)</td><td class="result-cell">Age in years</td></tr>
+    </table>
+    <div class="shortcuts"><span class="kbd">Ctrl</span>+<span class="kbd">;</span><span class="kbd-label">Static today's date</span></div>
+    <div class="shortcuts"><span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">;</span><span class="kbd-label">Static current time</span></div>
+    <div class="info-box"><strong>📌</strong> TODAY() and NOW() are VOLATILE — they recalculate every time the workbook calculates. Use Ctrl+; for a permanent static date.</div>
+  </div>
+</div>
+
+<!-- EDATE -->
+<div class="formula-card" id="f-edate">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">10</span>
+    <div class="formula-title-area">
+      <div class="formula-name">EDATE <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Adds or subtracts months from a date</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=EDATE(start_date, months)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=EDATE("1-Jan-2024", 6)</td><td>6 months ahead</td><td class="result-cell">1-Jul-2024</td></tr>
+      <tr><td class="formula-cell">=EDATE(A1, -3)</td><td>3 months before</td><td class="result-cell">3 months earlier</td></tr>
+      <tr><td class="formula-cell">=EDATE(A1, 12)</td><td>Renewal in 1 year</td><td class="result-cell">Same date next year</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- EOMONTH -->
+<div class="formula-card" id="f-eomonth">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">11</span>
+    <div class="formula-title-area">
+      <div class="formula-name">EOMONTH <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns the last day of the month, n months away</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=EOMONTH(start_date, months)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=EOMONTH("15-Mar-2024", 0)</td><td class="result-cell">31-Mar-2024  (end of same month)</td></tr>
+      <tr><td class="formula-cell">=EOMONTH("15-Feb-2024", 0)</td><td class="result-cell">29-Feb-2024  (leap year)</td></tr>
+      <tr><td class="formula-cell">=EOMONTH(TODAY(), 1)+1</td><td class="result-cell">First day of next month</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- WEEKDAY -->
+<div class="formula-card" id="f-weekday">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">12</span>
+    <div class="formula-title-area">
+      <div class="formula-name">WEEKDAY <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns the day of the week as a number</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=WEEKDAY(date, [return_type])</div>
+    <p class="desc">return_type=1: Sun=1..Sat=7 | return_type=2: Mon=1..Sun=7 | return_type=3: Mon=0..Sun=6</p>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Date</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=WEEKDAY("Monday", 2)</td><td>Monday</td><td class="result-cell">1</td></tr>
+      <tr><td class="formula-cell">=WEEKDAY(TODAY(), 2)>=6</td><td>Check if weekend</td><td class="result-cell">TRUE if Sat/Sun</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- WORKDAY -->
+<div class="formula-card" id="f-workday">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">13</span>
+    <div class="formula-title-area">
+      <div class="formula-name">WORKDAY <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Adds business days to a date (skips weekends &amp; holidays)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=WORKDAY(start_date, days, [holidays])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=WORKDAY("01-Jan-2024", 10)</td><td>10 business days after</td><td class="result-cell">15-Jan-2024</td></tr>
+      <tr><td class="formula-cell">=WORKDAY(A1, 30, holidays)</td><td>30 days, skip holidays</td><td class="result-cell">Delivery date</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DATEDIF -->
+<div class="formula-card" id="f-datedif">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">14</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DATEDIF <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Calculates difference between two dates in specified units</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">DATEDIF is a hidden/undocumented function that calculates exact date differences. Perfect for age calculations.</p>
+    <div class="syntax-box green">=DATEDIF(start_date, end_date, unit)</div>
+    <table class="ex-table">
+      <tr><th>Unit</th><th>Returns</th></tr>
+      <tr><td>"Y"</td><td>Complete years</td></tr>
+      <tr><td>"M"</td><td>Complete months</td></tr>
+      <tr><td>"D"</td><td>Total days</td></tr>
+      <tr><td>"YM"</td><td>Months ignoring years</td></tr>
+      <tr><td>"YD"</td><td>Days ignoring years</td></tr>
+    </table>
+    <table class="ex-table" style="margin-top:8px">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DATEDIF(A1, TODAY(), "Y")</td><td class="result-cell">Age in complete years</td></tr>
+      <tr><td class="formula-cell">=DATEDIF(A1,B1,"Y")&" yrs "&DATEDIF(A1,B1,"YM")&" mo"</td><td class="result-cell">2 yrs 3 mo</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> DATEDIF won't appear in IntelliSense — just type it. Start date must be ≤ end date or it returns #NUM!</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          LOGICAL FUNCTIONS             -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-logical">
+  <div class="cat-icon logical">⚡</div>
+  <div class="cat-title">Logical Functions</div>
+</div>
+
+<!-- IF -->
+<div class="formula-card" id="f-if">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IF <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Tests a condition and returns one of two values</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">IF is the foundation of decision-making in Excel. It evaluates a condition and returns value_if_true or value_if_false.</p>
+    <div class="syntax-box yellow">=IF(logical_test, value_if_true, value_if_false)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Logic</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=IF(A1>=50, "Pass", "Fail")</td><td>A1=75</td><td class="result-cell">Pass</td></tr>
+      <tr><td class="formula-cell">=IF(B1>0, "Profit", "Loss")</td><td>B1=-500</td><td class="result-cell">Loss</td></tr>
+      <tr><td class="formula-cell">=IF(A1="", "Empty", A1)</td><td>Blank check</td><td class="result-cell">Empty or value</td></tr>
+      <tr><td class="formula-cell">=IF(A1>90,"A", IF(A1>75,"B", IF(A1>60,"C","D")))</td><td>Nested IF grades</td><td class="result-cell">Grade letter</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Excel 2019+ offers IFS() for multiple conditions without messy nesting: =IFS(A1>90,"A", A1>75,"B", A1>60,"C", TRUE,"D")</div>
+  </div>
+</div>
+
+<!-- COUNTIF -->
+<div class="formula-card" id="f-countif">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">COUNTIF <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Counts cells that meet a single condition</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=COUNTIF(range, criteria)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=COUNTIF(A1:A20, "Delhi")</td><td>Count "Delhi" entries</td><td class="result-cell">Count</td></tr>
+      <tr><td class="formula-cell">=COUNTIF(B1:B20, ">100")</td><td>Count values > 100</td><td class="result-cell">Count</td></tr>
+      <tr><td class="formula-cell">=COUNTIF(C1:C20, "*Ltd*")</td><td>Contains "Ltd" (wildcard)</td><td class="result-cell">Count</td></tr>
+      <tr><td class="formula-cell">=COUNTIF(A:A, A1)>1</td><td>Check for duplicates</td><td class="result-cell">TRUE if duplicate</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SUMIF -->
+<div class="formula-card" id="f-sumif">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUMIF <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Sums values that meet a single condition</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=SUMIF(range, criteria, [sum_range])</div>
+    <p class="desc">If sum_range is omitted, the range itself is summed. When sum_range is given, it specifies which column to total.</p>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=SUMIF(A:A, "Delhi", C:C)</td><td>Sum column C where A = "Delhi"</td></tr>
+      <tr><td class="formula-cell">=SUMIF(B:B, ">5000", B:B)</td><td>Sum amounts greater than 5000</td></tr>
+      <tr><td class="formula-cell">=SUMIF(A:A, "*Ltd", C:C)</td><td>Sum where name ends with "Ltd"</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- COUNTIFS -->
+<div class="formula-card" id="f-countifs">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">COUNTIFS <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Counts cells meeting multiple criteria (AND logic)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=COUNTIFS(range1, criteria1, range2, criteria2, ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=COUNTIFS(A:A,"Delhi",B:B,"Manager")</td><td>Count Delhi Managers</td></tr>
+      <tr><td class="formula-cell">=COUNTIFS(C:C,">=50",C:C,"<=100")</td><td>Count values between 50 and 100</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SUMIFS -->
+<div class="formula-card" id="f-sumifs">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SUMIFS <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Sums values meeting multiple criteria</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=SUMIFS(sum_range, range1, criteria1, range2, criteria2, ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=SUMIFS(D:D, A:A,"Delhi", B:B,"Q1")</td><td>Sum sales for Delhi in Q1</td></tr>
+      <tr><td class="formula-cell">=SUMIFS(C:C, A:A,">="&E1, A:A,"<="&F1)</td><td>Sum between two dates</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- AND / OR / NOT -->
+<div class="formula-card" id="f-and-or-not">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">06–08</span>
+    <div class="formula-title-area">
+      <div class="formula-name">AND / OR / NOT <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Combine multiple logical tests</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=AND(logical1, logical2, ...)   — All must be TRUE
+=OR(logical1, logical2, ...)    — At least one must be TRUE
+=NOT(logical)                   — Reverses TRUE/FALSE</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=AND(A1>0, B1>0)</td><td class="result-cell">TRUE only if both positive</td></tr>
+      <tr><td class="formula-cell">=OR(A1="Delhi", A1="Mumbai")</td><td class="result-cell">TRUE if either city</td></tr>
+      <tr><td class="formula-cell">=NOT(ISBLANK(A1))</td><td class="result-cell">TRUE if A1 is NOT blank</td></tr>
+      <tr><td class="formula-cell">=IF(AND(A1>50,B1="Yes"),"Eligible","No")</td><td class="result-cell">Combined IF+AND</td></tr>
+      <tr><td class="formula-cell">=IF(OR(A1="CEO",A1="MD"),"Executive","Staff")</td><td class="result-cell">IF+OR check</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- IFERROR -->
+<div class="formula-card" id="f-iferror">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">09</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IFERROR <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Returns a custom value if formula produces an error</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=IFERROR(value, value_if_error)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=IFERROR(VLOOKUP(A1,B:C,2,0), "Not Found")</td><td>Clean VLOOKUP</td><td class="result-cell">Value or "Not Found"</td></tr>
+      <tr><td class="formula-cell">=IFERROR(1/A1, 0)</td><td>Division by zero safe</td><td class="result-cell">0 if A1=0</td></tr>
+      <tr><td class="formula-cell">=IFERROR(formula, "")</td><td>Hide errors</td><td class="result-cell">Blank instead of error</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Best Practice:</strong> Wrap VLOOKUP, INDEX/MATCH, and division formulas in IFERROR to create professional, error-free spreadsheets.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--        LOOKUP & REFERENCE              -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-lookup">
+  <div class="cat-icon lookup">🔍</div>
+  <div class="cat-title">Lookup &amp; Reference Functions</div>
+</div>
+
+<!-- VLOOKUP -->
+<div class="formula-card" id="f-vlookup">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">VLOOKUP <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Searches a column and returns a value from another column</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">VLOOKUP (Vertical Lookup) is one of the most used Excel functions. It searches down the first column of a table for a match, then returns a value from a specified column.</p>
+    <div class="syntax-box pink">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">lookup_value</span><span class="param-desc">The value to search for (e.g., employee ID, product code)</span></div>
+      <div class="param-row"><span class="param-name">table_array</span><span class="param-desc">The range containing the lookup table (lookup col must be FIRST)</span></div>
+      <div class="param-row"><span class="param-name">col_index_num</span><span class="param-desc">Column number to return (1 = first column of table_array)</span></div>
+      <div class="param-row"><span class="param-name">range_lookup</span><span class="param-desc">FALSE = exact match (recommended); TRUE = approximate match</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=VLOOKUP(A2, $E$2:$G$100, 2, FALSE)</td><td>Exact match — find A2 in col E, return col F</td></tr>
+      <tr><td class="formula-cell">=VLOOKUP(A2, Sheet2!$A:$C, 3, 0)</td><td>Lookup across sheets</td></tr>
+      <tr><td class="formula-cell">=IFERROR(VLOOKUP(A2,B:D,2,0),"Not Found")</td><td>Error-safe VLOOKUP</td></tr>
+      <tr><td class="formula-cell">=VLOOKUP(A2&B2, C:E, 3, 0)</td><td>Concatenate two lookup values</td></tr>
+      <tr><td class="formula-cell">=SUM(VLOOKUP(A2,B:G,{3,4,5},0))</td><td>VLOOKUP with SUM (multiple columns)</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️ Common Errors:</strong><br>
+    • #N/A — value not found (check exact spelling, use TRIM)<br>
+    • #REF! — col_index exceeds table width<br>
+    • Wrong values — forgot FALSE/0 for exact match<br>
+    • Slow on large data — lookup column not locked with $</div>
+    <div class="tip-box"><strong>💡 Modern Excel:</strong> Replace VLOOKUP with XLOOKUP (Excel 2021+) — no column number needed, supports reverse lookup, and returns arrays: =XLOOKUP(A2, B:B, C:C, "Not Found")</div>
+  </div>
+</div>
+
+<!-- VLOOKUP with MATCH -->
+<div class="formula-card" id="f-vlookup-match">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">VLOOKUP with MATCH <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Dynamic column number — no hardcoding col index</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Replace the fixed col_index_num with a MATCH function that finds the column number dynamically based on a header.</p>
+    <div class="syntax-box pink">=VLOOKUP(lookup, table, MATCH(col_header, header_row, 0), 0)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=VLOOKUP(A2, $B$1:$F$100, MATCH("Salary",$B$1:$F$1,0), 0)</td><td>Find column by header name dynamically</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Benefit:</strong> If columns are inserted or rearranged, this formula auto-adjusts. Pure VLOOKUP col_index breaks when you insert columns!</div>
+  </div>
+</div>
+
+<!-- INDEX MATCH -->
+<div class="formula-card" id="f-index-match">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">INDEX with MATCH <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">More flexible alternative to VLOOKUP — lookup any direction</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">INDEX returns a value at a given row/column position. MATCH finds the position of a value in a range. Together they form the most powerful lookup combination.</p>
+    <div class="syntax-box pink">=INDEX(return_range, MATCH(lookup_value, lookup_range, 0))</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=INDEX(C:C, MATCH(A2, B:B, 0))</td><td>Basic INDEX/MATCH — find A2 in B, return C</td></tr>
+      <tr><td class="formula-cell">=INDEX(A:A, MATCH(E2, C:C, 0))</td><td>Reverse lookup — look left (impossible with VLOOKUP!)</td></tr>
+      <tr><td class="formula-cell">=INDEX(B:B, MATCH(1,(A:A=D2)*(C:C=E2),0))</td><td>Two-criteria lookup (Ctrl+Shift+Enter)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 INDEX/MATCH Advantages over VLOOKUP:</strong><br>
+    ✅ Can look left (return columns to the LEFT of lookup)<br>
+    ✅ Column position doesn't break when inserting columns<br>
+    ✅ Faster on large datasets<br>
+    ✅ Not limited to first column</div>
+  </div>
+</div>
+
+<!-- HLOOKUP -->
+<div class="formula-card" id="f-hlookup">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">HLOOKUP <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Horizontal lookup — searches across a row</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=HLOOKUP(lookup_value, table_array, row_index_num, [range_lookup])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=HLOOKUP("Q2", $A$1:$D$5, 3, FALSE)</td><td>Find "Q2" in row 1, return row 3 value</td></tr>
+      <tr><td class="formula-cell">=HLOOKUP(A1, B1:F4, 2, 0)</td><td>Return 2nd row value</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> HLOOKUP searches horizontally (rows). VLOOKUP searches vertically (columns). Use when your lookup table is laid out in rows.</div>
+  </div>
+</div>
+
+<!-- OFFSET with MATCH -->
+<div class="formula-card" id="f-offset-match">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">OFFSET with MATCH <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Dynamic range reference that shifts based on position</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=OFFSET(reference, rows, cols, [height], [width])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=OFFSET(A1, MATCH(E1,A:A,0)-1, 2)</td><td>Find row of E1 in A, offset 2 cols right</td></tr>
+      <tr><td class="formula-cell">=SUM(OFFSET(A1, 0, 0, COUNTA(A:A), 1))</td><td>Dynamic sum that grows with data</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> OFFSET is volatile — it recalculates every time anything in the workbook changes. For large sheets, this can slow performance. Prefer INDEX/MATCH when possible.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          FINANCIAL                     -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-financial">
+  <div class="cat-icon financial">💰</div>
+  <div class="cat-title">Financial Functions</div>
+</div>
+
+<!-- PMT -->
+<div class="formula-card" id="f-pmt">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PMT <span class="formula-tag tag-financial">Financial</span></div>
+      <div class="formula-subtitle">Calculates the periodic payment for a loan or investment</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=PMT(rate, nper, pv, [fv], [type])</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">rate</span><span class="param-desc">Interest rate per period (annual rate ÷ 12 for monthly)</span></div>
+      <div class="param-row"><span class="param-name">nper</span><span class="param-desc">Total number of payment periods</span></div>
+      <div class="param-row"><span class="param-name">pv</span><span class="param-desc">Present value (loan amount, enter as negative)</span></div>
+      <div class="param-row"><span class="param-name">fv</span><span class="param-desc">Future value (default 0 for fully paid loan)</span></div>
+      <div class="param-row"><span class="param-name">type</span><span class="param-desc">0 = end of period; 1 = beginning of period</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Scenario</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PMT(8%/12, 5*12, -500000)</td><td>₹5L loan @ 8%/yr, 5 years</td><td class="result-cell">Monthly payment</td></tr>
+      <tr><td class="formula-cell">=PMT(10%/12, 240, -3000000)</td><td>₹30L home loan, 20 years</td><td class="result-cell">EMI</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> PMT returns a negative number (cash outflow). Use -PMT(...) or enter pv as positive to get positive EMI.</div>
+  </div>
+</div>
+
+<!-- IPMT -->
+<div class="formula-card" id="f-ipmt">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IPMT <span class="formula-tag tag-financial">Financial</span></div>
+      <div class="formula-subtitle">Returns the interest portion of a loan payment</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=IPMT(rate, per, nper, pv, [fv], [type])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=IPMT(10%/12, 1, 120, -1000000)</td><td class="result-cell">Interest in payment #1</td></tr>
+      <tr><td class="formula-cell">=IPMT(10%/12, 60, 120, -1000000)</td><td class="result-cell">Interest in payment #60 (midpoint)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Interest decreases over time as principal is repaid. Use IPMT down the rows (per=1,2,3…) to build a full amortization schedule.</div>
+  </div>
+</div>
+
+<!-- PPMT -->
+<div class="formula-card" id="f-ppmt">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PPMT <span class="formula-tag tag-financial">Financial</span></div>
+      <div class="formula-subtitle">Returns the principal portion of a loan payment</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=PPMT(rate, per, nper, pv, [fv], [type])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PPMT(10%/12, 1, 120, -1000000)</td><td class="result-cell">Principal repaid in payment #1</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 Relationship:</strong> PMT = IPMT + PPMT. Verify: each payment's interest + principal should equal the fixed EMI.</div>
+  </div>
+</div>
+
+<!-- PV -->
+<div class="formula-card" id="f-pv">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PV <span class="formula-tag tag-financial">Financial</span></div>
+      <div class="formula-subtitle">Present Value — what future cash flows are worth today</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=PV(rate, nper, pmt, [fv], [type])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Scenario</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PV(8%/12, 60, -5000)</td><td>Worth of ₹5000/mo for 5 yrs @ 8%</td><td class="result-cell">Present value</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Use Case:</strong> Is a lease worth it? Use PV to compare lump-sum vs recurring payments. If PV > upfront cost, payments are better.</div>
+  </div>
+</div>
+
+<!-- FV -->
+<div class="formula-card" id="f-fv">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FV <span class="formula-tag tag-financial">Financial</span></div>
+      <div class="formula-subtitle">Future Value — how much an investment grows over time</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=FV(rate, nper, pmt, [pv], [type])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Scenario</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FV(12%/12, 240, -5000)</td><td>₹5000/mo SIP for 20 yrs @ 12%</td><td class="result-cell">Corpus at maturity</td></tr>
+      <tr><td class="formula-cell">=FV(7%, 10, 0, -100000)</td><td>₹1L one-time @ 7% for 10 yrs</td><td class="result-cell">196,715</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 SIP Calculator:</strong> =FV(12%/12, 240, -5000, 0, 1) — type=1 means SIP paid at START of each month, giving slightly better returns.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          EXCEL FEATURES                -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-excel">
+  <div class="cat-icon excel">📊</div>
+  <div class="cat-title">MS Excel — Features &amp; UI Guide</div>
+</div>
+
+<!-- 1. Introduction -->
+<div class="excel-card open" id="ex-intro">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">01</span>
+    <div class="excel-card-title">Excel Introduction &amp; File Menu</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <p class="desc">Excel is Microsoft's spreadsheet application used for data organization, analysis, calculations, and visualization. The File menu (Backstage View) manages workbook operations.</p>
+    <ul class="feature-list">
+      <li><strong>New</strong> — Create a blank workbook or from a template</li>
+      <li><strong>Open</strong> — Open existing .xlsx, .xls, .csv, .xlsm files</li>
+      <li><strong>Save / Save As</strong> — Save current file or save with new name/format</li>
+      <li><strong>Print</strong> — Preview and print with settings for margins, orientation, scaling</li>
+      <li><strong>Share</strong> — Share via OneDrive, email attachment, or link</li>
+      <li><strong>Export</strong> — Convert to PDF, CSV, or other formats</li>
+      <li><strong>Options</strong> — Configure Excel behavior, add-ins, formulas, language</li>
+    </ul>
+    <div class="section-label">Essential File Shortcuts</div>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+N</span><span class="kbd-label">New workbook</span>
+      <span class="kbd">Ctrl+O</span><span class="kbd-label">Open file</span>
+      <span class="kbd">Ctrl+S</span><span class="kbd-label">Save</span>
+      <span class="kbd">Ctrl+Shift+S</span><span class="kbd-label">Save As</span>
+      <span class="kbd">Ctrl+W</span><span class="kbd-label">Close workbook</span>
+      <span class="kbd">Ctrl+P</span><span class="kbd-label">Print</span>
+      <span class="kbd">F12</span><span class="kbd-label">Save As dialog</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Clipboard, Font & Alignment -->
+<div class="excel-card" id="ex-clipboard">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">02</span>
+    <div class="excel-card-title">Clipboard, Font &amp; Alignment Group</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Cut/Copy/Paste</strong> — Move or duplicate cell content; Paste Special for values/formats only</li>
+      <li><strong>Format Painter</strong> — Copy formatting from one cell and apply to others (double-click to apply multiple times)</li>
+      <li><strong>Font</strong> — Change typeface, size, bold, italic, underline, color, background</li>
+      <li><strong>Borders</strong> — Add cell borders: outline, inside, thick, dashed, colored</li>
+      <li><strong>Alignment</strong> — Left, center, right, top, middle, bottom alignment; Indent; Wrap Text; Merge & Center</li>
+      <li><strong>Text Direction</strong> — Rotate text at angles (perfect for narrow column headers)</li>
+    </ul>
+    <div class="section-label">Shortcuts</div>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+C</span><span class="kbd-label">Copy</span>
+      <span class="kbd">Ctrl+X</span><span class="kbd-label">Cut</span>
+      <span class="kbd">Ctrl+V</span><span class="kbd-label">Paste</span>
+      <span class="kbd">Ctrl+Alt+V</span><span class="kbd-label">Paste Special</span>
+      <span class="kbd">Ctrl+B</span><span class="kbd-label">Bold</span>
+      <span class="kbd">Ctrl+I</span><span class="kbd-label">Italic</span>
+      <span class="kbd">Ctrl+U</span><span class="kbd-label">Underline</span>
+      <span class="kbd">Ctrl+E</span><span class="kbd-label">Center align</span>
+      <span class="kbd">Ctrl+L</span><span class="kbd-label">Left align</span>
+      <span class="kbd">Ctrl+R</span><span class="kbd-label">Right align</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Number Group -->
+<div class="excel-card" id="ex-number">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">03</span>
+    <div class="excel-card-title">Number Group — Formatting Numbers</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>General</strong> — Default format; displays numbers as typed</li>
+      <li><strong>Number</strong> — Show decimal places, thousands separator (₹1,23,456.78)</li>
+      <li><strong>Currency</strong> — Symbol + decimal; for financial data</li>
+      <li><strong>Accounting</strong> — Aligned currency symbols; negative values in parentheses</li>
+      <li><strong>Date / Time</strong> — Display serial numbers as dates or times</li>
+      <li><strong>Percentage</strong> — Multiply by 100 and show % (0.75 → 75%)</li>
+      <li><strong>Fraction</strong> — Display as fractions (0.5 → 1/2)</li>
+      <li><strong>Scientific</strong> — 1.23E+06 notation</li>
+      <li><strong>Custom Format</strong> — Build your own: "₹"#,##0.00, DD-MMM-YYYY, [Blue]Positive;[Red]Negative</li>
+    </ul>
+    <div class="section-label">Shortcuts</div>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+Shift+$</span><span class="kbd-label">Currency format</span>
+      <span class="kbd">Ctrl+Shift+%</span><span class="kbd-label">Percentage format</span>
+      <span class="kbd">Ctrl+Shift+#</span><span class="kbd-label">Date format</span>
+      <span class="kbd">Ctrl+Shift+@</span><span class="kbd-label">Time format</span>
+      <span class="kbd">Ctrl+1</span><span class="kbd-label">Format Cells dialog</span>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Conditional Formatting -->
+<div class="excel-card" id="ex-condformat">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">04</span>
+    <div class="excel-card-title">Conditional Formatting</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <p class="desc">Apply formatting automatically based on cell values or formulas. Turns your data into a visual dashboard without charts.</p>
+    <ul class="feature-list">
+      <li><strong>Highlight Cell Rules</strong> — Greater than, less than, equal to, between, text containing, duplicate values</li>
+      <li><strong>Top/Bottom Rules</strong> — Top 10 items, top 10%, bottom 10, above average, below average</li>
+      <li><strong>Data Bars</strong> — Horizontal bar inside cells proportional to value (in-cell chart)</li>
+      <li><strong>Color Scales</strong> — 2- or 3-color gradient across a range (heat map effect)</li>
+      <li><strong>Icon Sets</strong> — Arrows, traffic lights, stars, check marks based on value thresholds</li>
+      <li><strong>New Rule (Custom Formula)</strong> — Use formulas like =MOD(ROW(),2)=0 to stripe alternate rows</li>
+      <li><strong>Manage Rules</strong> — View, edit, reorder, and delete existing rules</li>
+    </ul>
+    <div class="tip-box"><strong>💡 Pro Tips:</strong><br>
+    • Use =$A1="Pending" (lock column, not row) to highlight entire rows<br>
+    • Stack multiple rules — first TRUE rule wins (manage order carefully)<br>
+    • Use ISBLANK(), ISNUMBER(), ISTEXT() in custom formulas</div>
+  </div>
+</div>
+
+<!-- 5. Format as Table -->
+<div class="excel-card" id="ex-table-style">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">05</span>
+    <div class="excel-card-title">Format as Table &amp; Cell Styles</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Format as Table</strong> — Converts a range to a structured table with auto-filter, banded rows, total row</li>
+      <li><strong>Structured References</strong> — Formulas use column names like =[@Sales]*[@Rate] instead of cell addresses</li>
+      <li><strong>Auto-Expand</strong> — Adding data below/beside a table automatically includes it in formulas and ranges</li>
+      <li><strong>Total Row</strong> — Toggle a summary row with dropdown for Sum/Average/Count/Min/Max</li>
+      <li><strong>Cell Styles</strong> — Pre-built formatting combinations: heading, title, accent colors, calculation styles</li>
+      <li><strong>Keyboard:</strong> Ctrl+T to create a table from selection</li>
+    </ul>
+    <div class="shortcuts"><span class="kbd">Ctrl+T</span><span class="kbd-label">Create Table</span></div>
+    <div class="tip-box"><strong>💡</strong> Tables are the #1 Excel best practice — all formulas referencing a table auto-update when data grows!</div>
+  </div>
+</div>
+
+<!-- 6. Insert Delete Format -->
+<div class="excel-card" id="ex-insert-delete">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">06</span>
+    <div class="excel-card-title">Insert, Delete &amp; Format</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Insert Rows/Columns</strong> — Right-click → Insert, or Ctrl+Shift++ to insert above/left</li>
+      <li><strong>Delete Rows/Columns</strong> — Right-click → Delete, or Ctrl+- to remove</li>
+      <li><strong>Row Height / Column Width</strong> — Drag border or Format → Row Height/Column Width for exact sizing</li>
+      <li><strong>AutoFit</strong> — Double-click column/row border to fit content; Format → AutoFit</li>
+      <li><strong>Hide/Unhide</strong> — Hide columns or rows; Ctrl+0 (column) Ctrl+9 (row)</li>
+      <li><strong>Rename/Move Sheet</strong> — Double-click tab to rename; right-click for Move/Copy</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+Shift++</span><span class="kbd-label">Insert row/column</span>
+      <span class="kbd">Ctrl+-</span><span class="kbd-label">Delete row/column</span>
+      <span class="kbd">Ctrl+9</span><span class="kbd-label">Hide row</span>
+      <span class="kbd">Ctrl+0</span><span class="kbd-label">Hide column</span>
+    </div>
+  </div>
+</div>
+
+<!-- 7. AutoSum, Fill, Clear, Sort & Filter -->
+<div class="excel-card" id="ex-autosum">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">07</span>
+    <div class="excel-card-title">AutoSum, Fill, Clear, Sort &amp; Filter</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>AutoSum</strong> — Alt+= inserts SUM; dropdown gives Average, Count, Max, Min</li>
+      <li><strong>Fill Down/Right/Series</strong> — Ctrl+D fills down, Ctrl+R fills right; Fill → Series for number patterns</li>
+      <li><strong>Flash Fill</strong> — Ctrl+E intelligently fills patterns detected from examples (extract first name, format phone, etc.)</li>
+      <li><strong>Clear Contents</strong> — Delete key clears content only; Clear All removes content AND formatting</li>
+      <li><strong>Sort A→Z / Z→A</strong> — Quick single-column sort; Data → Sort for multi-level sorting</li>
+      <li><strong>Filter</strong> — Ctrl+Shift+L toggles AutoFilter; dropdown on each column header to filter by value, color, condition</li>
+      <li><strong>Advanced Filter</strong> — Filter with complex criteria in a separate criteria range; extract to different location</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Alt+=</span><span class="kbd-label">AutoSum</span>
+      <span class="kbd">Ctrl+D</span><span class="kbd-label">Fill Down</span>
+      <span class="kbd">Ctrl+R</span><span class="kbd-label">Fill Right</span>
+      <span class="kbd">Ctrl+E</span><span class="kbd-label">Flash Fill</span>
+      <span class="kbd">Ctrl+Shift+L</span><span class="kbd-label">Toggle Filter</span>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Find & Select -->
+<div class="excel-card" id="ex-find">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">08</span>
+    <div class="excel-card-title">Find &amp; Select</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Find (Ctrl+F)</strong> — Search for text, values, or formulas; match case, whole cell, within sheet/workbook</li>
+      <li><strong>Replace (Ctrl+H)</strong> — Find and replace values or formatting; Replace All for batch changes</li>
+      <li><strong>Go To Special</strong> — Select blanks, formulas, constants, last cell, comments, visible cells only</li>
+      <li><strong>Find All</strong> — Lists all occurrences; click a result to navigate to it</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+F</span><span class="kbd-label">Find</span>
+      <span class="kbd">Ctrl+H</span><span class="kbd-label">Replace</span>
+      <span class="kbd">Ctrl+G</span><span class="kbd-label">Go To</span>
+      <span class="kbd">Ctrl+G → Special</span><span class="kbd-label">Go To Special</span>
+    </div>
+    <div class="tip-box"><strong>💡 Power Trick:</strong> Ctrl+G → Special → Blanks → OK selects ALL blank cells in the selection. Then type a value and Ctrl+Enter to fill all blanks at once!</div>
+  </div>
+</div>
+
+<!-- 9. Table & Pivot Table -->
+<div class="excel-card" id="ex-pivot">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">09</span>
+    <div class="excel-card-title">Table &amp; Pivot Table</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <p class="desc">Pivot Tables are Excel's most powerful data analysis tool. They allow you to summarize, group, and cross-tabulate large datasets in seconds.</p>
+    <ul class="feature-list">
+      <li><strong>Create Pivot Table</strong> — Insert → Pivot Table; choose source data and placement</li>
+      <li><strong>Field Areas</strong> — Drag fields to: Filters (report filter), Columns (cross-tab), Rows (groups), Values (aggregate)</li>
+      <li><strong>Value Settings</strong> — Right-click → Value Field Settings: Sum, Count, Average, Max, Min, % of total, etc.</li>
+      <li><strong>Group</strong> — Group dates by month/quarter/year; group numbers into bins</li>
+      <li><strong>Calculated Field</strong> — Create custom formulas within the Pivot Table (e.g., Profit = Revenue - Cost)</li>
+      <li><strong>Refresh</strong> — Alt+F5 or right-click → Refresh after source data changes</li>
+      <li><strong>Pivot Chart</strong> — Insert a chart linked to a Pivot Table; updates with filters automatically</li>
+      <li><strong>Slicers</strong> — Visual filter buttons; click to filter Pivot Table without using dropdown arrows</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Alt+F5</span><span class="kbd-label">Refresh Pivot</span>
+      <span class="kbd">Ctrl+T</span><span class="kbd-label">Create Table</span>
+    </div>
+    <div class="tip-box"><strong>💡 Best Practice:</strong> Convert source data to a Table (Ctrl+T) before creating a Pivot — the Pivot will auto-include new rows when you refresh!</div>
+  </div>
+</div>
+
+<!-- 10. Charts -->
+<div class="excel-card" id="ex-charts">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">10</span>
+    <div class="excel-card-title">About Charts</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Column/Bar</strong> — Compare categories; clustered or stacked</li>
+      <li><strong>Line</strong> — Show trends over time; excellent for financial/time series data</li>
+      <li><strong>Pie/Donut</strong> — Show proportions of a whole; keep to 5 slices max</li>
+      <li><strong>Scatter/Bubble</strong> — Show correlation between two/three variables</li>
+      <li><strong>Area</strong> — Like line but fills below; shows cumulative value</li>
+      <li><strong>Combo Chart</strong> — Mix bar and line on same chart with secondary axis</li>
+      <li><strong>Waterfall</strong> — Show sequential addition/subtraction (perfect for P&L)</li>
+      <li><strong>Histogram</strong> — Distribution of data in bins</li>
+      <li><strong>Chart Elements</strong> — Add/remove: title, axis labels, gridlines, data labels, legend, trendline</li>
+      <li><strong>Move Chart</strong> — Place on separate Chart Sheet or embed in worksheet</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Alt+F1</span><span class="kbd-label">Insert default chart (in sheet)</span>
+      <span class="kbd">F11</span><span class="kbd-label">Create chart on new sheet</span>
+    </div>
+  </div>
+</div>
+
+<!-- 11. Conditional Formatting & Sparklines -->
+<div class="excel-card" id="ex-sparkline">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">11</span>
+    <div class="excel-card-title">Sparkline, Slicer, Hyperlink</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Sparklines</strong> — Tiny charts inside a cell: Line, Column, Win/Loss. Perfect for trend overview in a table row</li>
+      <li><strong>Slicer</strong> — Visual filter buttons for Tables and Pivot Tables; click to filter instantly</li>
+      <li><strong>Timeline</strong> — Date-based slicer for filtering Pivot Tables by periods (months, quarters, years)</li>
+      <li><strong>Hyperlink (Ctrl+K)</strong> — Link to: URL, file, email address, or another cell/sheet in the workbook</li>
+    </ul>
+    <div class="shortcuts"><span class="kbd">Ctrl+K</span><span class="kbd-label">Insert hyperlink</span></div>
+  </div>
+</div>
+
+<!-- 12. Page Setup -->
+<div class="excel-card" id="ex-pagesetup">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">12</span>
+    <div class="excel-card-title">Page Setup — Print Layout</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Page Orientation</strong> — Portrait (tall) or Landscape (wide)</li>
+      <li><strong>Paper Size</strong> — A4, Letter, Legal, custom sizes</li>
+      <li><strong>Margins</strong> — Normal, Wide, Narrow, or custom values</li>
+      <li><strong>Print Area</strong> — Set specific range to print; ignore other data</li>
+      <li><strong>Print Titles</strong> — Repeat row/column headers on every printed page</li>
+      <li><strong>Scale to Fit</strong> — Shrink/stretch to fit 1 page wide × n pages tall</li>
+      <li><strong>Page Breaks</strong> — Insert horizontal/vertical page breaks manually</li>
+      <li><strong>Headers & Footers</strong> — Add page numbers, date, file name, logo to printed pages</li>
+      <li><strong>Print Preview</strong> — Ctrl+P opens preview; check before printing!</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+P</span><span class="kbd-label">Print / Print Preview</span>
+    </div>
+  </div>
+</div>
+
+<!-- 13. Formula Auditing -->
+<div class="excel-card" id="ex-auditing">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">13</span>
+    <div class="excel-card-title">Formula Auditing, Watch Window &amp; Calculation</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Trace Precedents</strong> — Blue arrows show which cells feed into selected formula</li>
+      <li><strong>Trace Dependents</strong> — Blue arrows show which formulas USE the selected cell</li>
+      <li><strong>Remove Arrows</strong> — Clear audit arrows</li>
+      <li><strong>Evaluate Formula</strong> — Step through formula calculation one part at a time (debugging tool)</li>
+      <li><strong>Error Checking</strong> — Highlights formula errors and suggests corrections</li>
+      <li><strong>Watch Window</strong> — Monitor specific cells even when on a different sheet</li>
+      <li><strong>Calculation Options</strong> — Automatic (default), Manual (F9 to recalculate), Semi-automatic</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+`</span><span class="kbd-label">Show/hide all formulas</span>
+      <span class="kbd">F9</span><span class="kbd-label">Recalculate workbook</span>
+      <span class="kbd">Shift+F9</span><span class="kbd-label">Recalculate active sheet</span>
+    </div>
+  </div>
+</div>
+
+<!-- 14. Data Tools -->
+<div class="excel-card" id="ex-data">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">14</span>
+    <div class="excel-card-title">Text to Columns, Remove Duplicates, Data Validation</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Text to Columns</strong> — Split text in one column into multiple columns by delimiter (comma, space, tab) or fixed width</li>
+      <li><strong>Remove Duplicates</strong> — Find and delete duplicate rows based on selected columns</li>
+      <li><strong>Data Validation</strong> — Restrict cell input: whole number, decimal, date, list (dropdown), custom formula</li>
+      <li><strong>Input Message</strong> — Show tooltip when cell is selected explaining what to enter</li>
+      <li><strong>Error Alert</strong> — Show error if invalid data entered: Stop (reject), Warning, Information</li>
+      <li><strong>Dropdown List</strong> — Data Validation → List → source range or comma-separated values</li>
+    </ul>
+    <div class="tip-box"><strong>💡 Data Validation Formula:</strong> Use custom formula for complex rules. E.g., to require unique values: =COUNTIF($A$1:$A$100,A1)=1</div>
+  </div>
+</div>
+
+<!-- 15. What If Analysis -->
+<div class="excel-card" id="ex-whatif">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">15</span>
+    <div class="excel-card-title">Consolidate &amp; What-If Analysis</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Consolidate</strong> — Merge data from multiple ranges or worksheets with Sum/Average/Count functions</li>
+      <li><strong>Goal Seek</strong> — What input value produces a desired result? (e.g., what interest rate gives me ₹10k EMI?)</li>
+      <li><strong>Scenario Manager</strong> — Create named scenarios (Best/Worst/Base case) and switch between them</li>
+      <li><strong>Data Table</strong> — See how changing one or two variables affects formula results (sensitivity table)</li>
+      <li><strong>Solver</strong> — Advanced optimization — find optimal values given constraints (linear/nonlinear programming)</li>
+    </ul>
+    <div class="info-box"><strong>📌 Goal Seek Example:</strong> Loan EMI formula → Goal Seek sets PMT result = desired EMI → adjusts interest rate automatically. Saves hours of manual trial and error!</div>
+  </div>
+</div>
+
+<!-- 16. Group & Subtotal -->
+<div class="excel-card" id="ex-group">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">16</span>
+    <div class="excel-card-title">Group, Ungroup &amp; Subtotal</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Group Rows/Columns</strong> — Collapse detail rows under a group header; toggle with +/- buttons or 1/2/3 level buttons</li>
+      <li><strong>Ungroup</strong> — Remove grouping from rows or columns</li>
+      <li><strong>Auto Outline</strong> — Excel auto-detects subtotal rows and creates outline groups</li>
+      <li><strong>Subtotal</strong> — Data → Subtotal inserts subtotal rows for each group change in a sorted column</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Alt+Shift+→</span><span class="kbd-label">Group selection</span>
+      <span class="kbd">Alt+Shift+←</span><span class="kbd-label">Ungroup selection</span>
+    </div>
+  </div>
+</div>
+
+<!-- 17. Review -->
+<div class="excel-card" id="ex-review">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">17</span>
+    <div class="excel-card-title">Review Menu</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Spelling Check</strong> — F7 checks spelling across selected cells or entire sheet</li>
+      <li><strong>Comments / Notes</strong> — Insert notes on cells; red triangle indicator; Shift+F2 to insert</li>
+      <li><strong>Protect Sheet</strong> — Prevent editing of cells, rows, columns; set password; allow specific actions</li>
+      <li><strong>Protect Workbook</strong> — Prevent adding, deleting, or moving sheets; set structure password</li>
+      <li><strong>Allow Edit Ranges</strong> — In a protected sheet, specify ranges that specific users can edit</li>
+      <li><strong>Track Changes</strong> — Highlight edits made; accept or reject individual changes</li>
+      <li><strong>Share Workbook</strong> — Enable multi-user editing (older Excel feature; use OneDrive co-authoring in modern Excel)</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">F7</span><span class="kbd-label">Spelling check</span>
+      <span class="kbd">Shift+F2</span><span class="kbd-label">Insert/Edit comment</span>
+    </div>
+  </div>
+</div>
+
+<!-- 18. View -->
+<div class="excel-card" id="ex-view">
+  <div class="excel-card-header" onclick="toggleExcel(this.parentElement)">
+    <span class="excel-card-num">18</span>
+    <div class="excel-card-title">View Menu</div>
+    <span class="formula-toggle">▼</span>
+  </div>
+  <div class="excel-card-body">
+    <ul class="feature-list">
+      <li><strong>Normal / Page Layout / Page Break Preview</strong> — Switch between editing views and print preview modes</li>
+      <li><strong>Freeze Panes</strong> — Keep header rows/columns visible while scrolling; Freeze First Row/Column or custom</li>
+      <li><strong>Split</strong> — Divide the window into 2 or 4 independent panes to view different parts simultaneously</li>
+      <li><strong>New Window</strong> — Open same workbook in second window (view two sheets side by side)</li>
+      <li><strong>Arrange All</strong> — Tile, horizontal, vertical, or cascade multiple open windows</li>
+      <li><strong>Zoom</strong> — Ctrl+Scroll or View → Zoom to change zoom level; Ctrl+Shift+End to see full data extent</li>
+      <li><strong>Hide/Unhide Gridlines</strong> — Toggle cell grid display</li>
+      <li><strong>Formula Bar / Headings</strong> — Toggle row numbers and column letters visibility</li>
+      <li><strong>Macros (Alt+F8)</strong> — Record, run, or manage VBA macros; Alt+F11 opens VBA editor</li>
+    </ul>
+    <div class="shortcuts">
+      <span class="kbd">Ctrl+Shift+End</span><span class="kbd-label">Jump to last used cell</span>
+      <span class="kbd">Ctrl+Home</span><span class="kbd-label">Go to cell A1</span>
+      <span class="kbd">Alt+F8</span><span class="kbd-label">Macros dialog</span>
+      <span class="kbd">Alt+F11</span><span class="kbd-label">VBA Editor</span>
+      <span class="kbd">Ctrl+Scroll</span><span class="kbd-label">Zoom in/out</span>
+    </div>
+    <div class="tip-box"><strong>💡 Freeze Panes Tip:</strong> Select cell B2 → Freeze Panes → Freezes row 1 AND column A simultaneously — perfect for large tables with both row and column headers!</div>
+  </div>
+</div>
+
+<!-- ── GRAND SHORTCUTS REFERENCE ── -->
+<div class="cat-header" id="sec-shortcuts">
+  <div class="cat-icon excel">⌨️</div>
+  <div class="cat-title">Master Shortcuts Reference</div>
+</div>
+
+<div class="formula-card open">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">★</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Complete Excel Keyboard Shortcuts</div>
+      <div class="formula-subtitle">The most important shortcuts to memorize</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="section-label">Navigation</div>
+    <table class="ex-table">
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td class="formula-cell">Ctrl + Arrow</td><td>Jump to last filled cell in direction</td></tr>
+      <tr><td class="formula-cell">Ctrl + Home</td><td>Go to cell A1</td></tr>
+      <tr><td class="formula-cell">Ctrl + End</td><td>Go to last used cell</td></tr>
+      <tr><td class="formula-cell">Ctrl + Page Up/Down</td><td>Switch between worksheets</td></tr>
+      <tr><td class="formula-cell">F5 / Ctrl+G</td><td>Go To dialog</td></tr>
+      <tr><td class="formula-cell">Name Box (top left)</td><td>Type cell address + Enter to navigate</td></tr>
+    </table>
+    <div class="section-label">Selection</div>
+    <table class="ex-table">
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td class="formula-cell">Ctrl + A</td><td>Select all (press twice for entire sheet)</td></tr>
+      <tr><td class="formula-cell">Ctrl + Shift + Arrow</td><td>Extend selection to last filled cell</td></tr>
+      <tr><td class="formula-cell">Shift + Space</td><td>Select entire row</td></tr>
+      <tr><td class="formula-cell">Ctrl + Space</td><td>Select entire column</td></tr>
+    </table>
+    <div class="section-label">Editing</div>
+    <table class="ex-table">
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td class="formula-cell">F2</td><td>Edit cell (enter edit mode)</td></tr>
+      <tr><td class="formula-cell">Ctrl + Z / Y</td><td>Undo / Redo</td></tr>
+      <tr><td class="formula-cell">Ctrl + Enter</td><td>Fill same value in all selected cells</td></tr>
+      <tr><td class="formula-cell">Alt + Enter</td><td>New line within a cell</td></tr>
+      <tr><td class="formula-cell">Delete</td><td>Clear cell contents (keeps formatting)</td></tr>
+      <tr><td class="formula-cell">Ctrl + Delete</td><td>Delete to end of line in cell</td></tr>
+      <tr><td class="formula-cell">F4</td><td>Toggle absolute/relative reference ($A$1 → A$1 → $A1 → A1)</td></tr>
+    </table>
+    <div class="section-label">Formulas</div>
+    <table class="ex-table">
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td class="formula-cell">= (equals)</td><td>Start a formula</td></tr>
+      <tr><td class="formula-cell">Alt + =</td><td>AutoSum</td></tr>
+      <tr><td class="formula-cell">Ctrl + `</td><td>Toggle show formulas / values</td></tr>
+      <tr><td class="formula-cell">F9</td><td>Evaluate selected part of formula</td></tr>
+      <tr><td class="formula-cell">Shift+F3</td><td>Insert Function dialog</td></tr>
+      <tr><td class="formula-cell">Ctrl+Shift+Enter</td><td>Enter as array formula (legacy)</td></tr>
+    </table>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── TOGGLE FORMULA CARDS ──
+function toggle(card) {
+  card.classList.toggle('open');
+}
+function toggleExcel(card) {
+  card.classList.toggle('open');
+}
+
+// ── BACK TO TOP ──
+window.addEventListener('scroll', () => {
+  const bt = document.getElementById('backTop');
+  bt.classList.toggle('visible', window.scrollY > 400);
+});
+
+// ── SEARCH ──
+function doSearch(q) {
+  const cards = document.querySelectorAll('.formula-card, .excel-card');
+  q = q.toLowerCase().trim();
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (!q || text.includes(q)) {
+      card.style.display = '';
+      if (q) card.classList.add('open');
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  // Show/hide section headers
+  document.querySelectorAll('.cat-header').forEach(h => {
+    const section = h.nextElementSibling;
+    let hasVisible = false;
+    let el = section;
+    while (el && !el.classList.contains('cat-header')) {
+      if (el.style.display !== 'none' && (el.classList.contains('formula-card') || el.classList.contains('excel-card'))) {
+        hasVisible = true; break;
+      }
+      el = el.nextElementSibling;
+    }
+    h.style.display = !q || hasVisible ? '' : 'none';
+  });
+}
+
+// ── ACTIVE SIDEBAR LINK ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.sidebar-link[href="#${id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+
+['sec-math','sec-text','sec-datetime','sec-logical','sec-lookup','sec-financial','sec-excel']
+  .forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+</script>
+</body>
+</html>
