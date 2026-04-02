@@ -171,6 +171,9 @@ body {
 .cat-icon.lookup { background: linear-gradient(135deg, #2d1f3d, #ec4899); }
 .cat-icon.financial { background: linear-gradient(135deg, #1a1f2e, #6366f1); }
 .cat-icon.excel { background: linear-gradient(135deg, #1a2e1a, #22c55e); }
+.cat-icon.excel365 { background: linear-gradient(135deg, #0a2618, #10b981); }
+.cat-icon.powerq { background: linear-gradient(135deg, #1a1a0a, #f59e0b); }
+.cat-icon.copilot { background: linear-gradient(135deg, #1a0a2e, #8b5cf6); }
 
 .cat-title {
   font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
@@ -211,6 +214,9 @@ body {
 .tag-logical { background: rgba(245,158,11,0.15); color: #fcd34d; }
 .tag-lookup { background: rgba(236,72,153,0.15); color: #f9a8d4; }
 .tag-financial { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+.tag-365 { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+.tag-pq  { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.tag-new { background: rgba(236,72,153,0.12); color: #f472b6; border: 1px solid rgba(236,72,153,0.3); }
 
 .formula-subtitle { font-size: 0.82rem; color: var(--text2); margin-top: 3px; }
 .formula-toggle {
@@ -370,7 +376,7 @@ body {
 
 <!-- ── HEADER ── -->
 <header class="site-header">
-  <div class="logo">Excel<span>Ref</span></div>
+  <div class="logo">Rishu<span>Writes</span></div>
   <div class="search-bar">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Search formulas, shortcuts..." oninput="doSearch(this.value)">
@@ -383,6 +389,17 @@ body {
 
 <!-- ── SIDEBAR ── -->
 <nav class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">🚀 Excel 365 Exclusive</div>
+    <a class="sidebar-link" href="#sec-365-dynarray">Dynamic Arrays & Spill</a>
+    <a class="sidebar-link" href="#sec-365-da-funcs">DA Functions Deep Dive</a>
+    <a class="sidebar-link" href="#sec-365-implicit">Implicit Intersection & @</a>
+    <a class="sidebar-link" href="#sec-365-linked">Linked Data Types</a>
+    <a class="sidebar-link" href="#sec-365-powerquery">Power Query</a>
+    <a class="sidebar-link" href="#sec-365-powerpivot">Power Pivot</a>
+    <a class="sidebar-link" href="#sec-365-copilot">Copilot in Excel</a>
+    <a class="sidebar-link" href="#sec-365-newfeatures">New 365 UI Features</a>
+  </div>
   <div class="sidebar-section">
     <div class="sidebar-label">📐 Math Formulas</div>
     <a class="sidebar-link" href="#sec-math">All Math Functions</a>
@@ -408,6 +425,18 @@ body {
     <a class="sidebar-link" href="#sec-financial">PMT, PV, FV…</a>
   </div>
   <div class="sidebar-section">
+    <div class="sidebar-label">📊 Statistical</div>
+    <a class="sidebar-link" href="#sec-statistical">MEDIAN, RANK, PERCENTILE…</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">ℹ️ Information</div>
+    <a class="sidebar-link" href="#sec-info">IS Functions, CELL, STOCKHISTORY</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">🔁 Compatibility</div>
+    <a class="sidebar-link" href="#sec-compat">Legacy Functions</a>
+  </div>
+  <div class="sidebar-section">
     <div class="sidebar-label">📊 Excel Features</div>
     <a class="sidebar-link" href="#sec-excel">UI & Features Guide</a>
   </div>
@@ -422,10 +451,11 @@ body {
   <h1>The <em>Complete</em> Excel Formula &amp; Feature Guide</h1>
   <p>Every formula explained with syntax, parameters, real examples, and keyboard shortcuts. From basic math to advanced VLOOKUP combinations.</p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Formulas Covered</div></div>
-    <div class="stat"><div class="stat-num">55</div><div class="stat-label">Excel Features</div></div>
-    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Live Examples</div></div>
+    <div class="stat"><div class="stat-num">250+</div><div class="stat-label">Formulas Covered</div></div>
+    <div class="stat"><div class="stat-num">55+</div><div class="stat-label">Excel Features</div></div>
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Live Examples</div></div>
     <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Shortcuts</div></div>
+    <div class="stat"><div class="stat-num">365</div><div class="stat-label">Exclusive Section</div></div>
   </div>
 </div>
 
@@ -1011,6 +1041,246 @@ body {
   </div>
 </div>
 
+<!-- AGGREGATE -->
+<div class="formula-card" id="f-aggregate">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">27</span>
+    <div class="formula-title-area">
+      <div class="formula-name">AGGREGATE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Aggregate calculation with options to ignore hidden rows or errors</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">AGGREGATE is a supercharged SUBTOTAL — it supports 19 functions and can ignore hidden rows, errors, or other SUBTOTAL/AGGREGATE results.</p>
+    <div class="syntax-box">=AGGREGATE(function_num, options, ref1, [ref2])</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">function_num</span><span class="param-desc">1=AVERAGE, 2=COUNT, 3=COUNTA, 4=MAX, 5=MIN, 9=SUM, 14=LARGE, 15=SMALL…</span></div>
+      <div class="param-row"><span class="param-name">options</span><span class="param-desc">0=ignore nested subtotals; 1=ignore hidden rows; 2=ignore errors; 5=ignore hidden+errors; 6=ignore all</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=AGGREGATE(9, 5, A1:A100)</td><td>SUM ignoring hidden rows and errors</td></tr>
+      <tr><td class="formula-cell">=AGGREGATE(15, 6, A1:A100, 1)</td><td>SMALL (1st smallest) ignoring all</td></tr>
+      <tr><td class="formula-cell">=AGGREGATE(14, 6, A1:A100, 3)</td><td>LARGE (3rd largest) ignoring all</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> AGGREGATE is ideal for filtered lists with errors — AGGREGATE(9,7,A:A) sums only visible, non-error cells.</div>
+  </div>
+</div>
+
+<!-- CEILING -->
+<div class="formula-card" id="f-ceiling">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">28</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CEILING / CEILING.MATH / CEILING.PRECISE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds a number up to the nearest multiple of significance</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=CEILING(number, significance)
+=CEILING.MATH(number, [significance], [mode])
+=CEILING.PRECISE(number, [significance])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CEILING(2.3, 1)</td><td class="result-cell">3</td></tr>
+      <tr><td class="formula-cell">=CEILING(23, 5)</td><td class="result-cell">25  (next multiple of 5)</td></tr>
+      <tr><td class="formula-cell">=CEILING.MATH(-5.5, 2, 1)</td><td class="result-cell">-4  (mode=1 rounds toward zero)</td></tr>
+      <tr><td class="formula-cell">=CEILING.PRECISE(-5.5, 2)</td><td class="result-cell">-4  (always rounds up)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Use Case:</strong> Time rounding — =CEILING(A1, TIME(0,15,0)) rounds a time up to the next 15-minute slot. Price rounding — =CEILING(price, 0.05) rounds to nearest 5 paise.</div>
+  </div>
+</div>
+
+<!-- FLOOR -->
+<div class="formula-card" id="f-floor">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">29</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FLOOR.MATH / FLOOR.PRECISE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds a number down to the nearest multiple of significance</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=FLOOR.MATH(number, [significance], [mode])
+=FLOOR.PRECISE(number, [significance])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FLOOR.MATH(23, 5)</td><td class="result-cell">20  (previous multiple of 5)</td></tr>
+      <tr><td class="formula-cell">=FLOOR.MATH(-5.5, 2)</td><td class="result-cell">-6  (rounds away from zero)</td></tr>
+      <tr><td class="formula-cell">=FLOOR.PRECISE(-5.5, 2)</td><td class="result-cell">-6  (always rounds down)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- INT -->
+<div class="formula-card" id="f-int">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">30</span>
+    <div class="formula-title-area">
+      <div class="formula-name">INT <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds a number down to the nearest integer</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=INT(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=INT(8.9)</td><td class="result-cell">8</td></tr>
+      <tr><td class="formula-cell">=INT(-8.1)</td><td class="result-cell">-9  (rounds toward negative infinity)</td></tr>
+      <tr><td class="formula-cell">=A1-INT(A1)</td><td class="result-cell">Decimal part only (e.g. time from datetime)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 INT vs ROUNDDOWN:</strong> INT(-8.1) = -9 but ROUNDDOWN(-8.1,0) = -8. INT always rounds toward negative infinity; ROUNDDOWN always rounds toward zero.</div>
+  </div>
+</div>
+
+<!-- DECIMAL -->
+<div class="formula-card" id="f-decimal">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">31</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DECIMAL <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Converts a number in any base to decimal (base 10)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=DECIMAL(text, radix)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DECIMAL("FF", 16)</td><td>Hexadecimal to decimal</td><td class="result-cell">255</td></tr>
+      <tr><td class="formula-cell">=DECIMAL("1010", 2)</td><td>Binary to decimal</td><td class="result-cell">10</td></tr>
+      <tr><td class="formula-cell">=DECIMAL("77", 8)</td><td>Octal to decimal</td><td class="result-cell">63</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- MROUND -->
+<div class="formula-card" id="f-mround">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">32</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MROUND <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds a number to the nearest desired multiple</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=MROUND(number, multiple)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MROUND(10, 3)</td><td class="result-cell">9  (nearest multiple of 3)</td></tr>
+      <tr><td class="formula-cell">=MROUND(7.5, 5)</td><td class="result-cell">10</td></tr>
+      <tr><td class="formula-cell">=MROUND(NOW(), TIME(0,15,0))</td><td class="result-cell">Time rounded to nearest 15 minutes</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> MROUND rounds to nearest (up or down). Use CEILING for always-up and FLOOR for always-down to a multiple.</div>
+  </div>
+</div>
+
+<!-- SIGN -->
+<div class="formula-card" id="f-sign">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">33</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SIGN <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Returns the sign of a number: 1, 0, or -1</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=SIGN(number)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SIGN(100)</td><td class="result-cell">1</td></tr>
+      <tr><td class="formula-cell">=SIGN(-50)</td><td class="result-cell">-1</td></tr>
+      <tr><td class="formula-cell">=SIGN(0)</td><td class="result-cell">0</td></tr>
+      <tr><td class="formula-cell">=IF(SIGN(A1-B1)=1,"Profit","Loss")</td><td class="result-cell">Profit/Loss flag</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- RAND / RANDBETWEEN / RANDARRAY -->
+<div class="formula-card" id="f-rand">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">34</span>
+    <div class="formula-title-area">
+      <div class="formula-name">RAND / RANDBETWEEN / RANDARRAY <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Generate random numbers — single, in a range, or as an array</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=RAND()                                         — random decimal 0 to 1
+=RANDBETWEEN(bottom, top)                       — random integer in range
+=RANDARRAY([rows],[cols],[min],[max],[integer])  — random array (Excel 365)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=RAND()</td><td class="result-cell">0.472… (changes each recalc)</td></tr>
+      <tr><td class="formula-cell">=RANDBETWEEN(1, 100)</td><td class="result-cell">Random integer 1–100</td></tr>
+      <tr><td class="formula-cell">=RANDBETWEEN(DATE(2024,1,1), TODAY())</td><td class="result-cell">Random date in range</td></tr>
+      <tr><td class="formula-cell">=RANDARRAY(5, 3, 1, 100, TRUE)</td><td class="result-cell">5×3 array of integers 1–100</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> RAND and RANDBETWEEN are volatile — they recalculate on every change. Press F9 to recalculate. To freeze a random value, copy → Paste Special → Values.</div>
+  </div>
+</div>
+
+<!-- SEQUENCE -->
+<div class="formula-card" id="f-sequence">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">35</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SEQUENCE <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Generates a sequential number array — Excel 365 dynamic array</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=SEQUENCE(rows, [columns], [start], [step])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SEQUENCE(5)</td><td class="result-cell">1, 2, 3, 4, 5  (in 5 rows)</td></tr>
+      <tr><td class="formula-cell">=SEQUENCE(3, 4, 0, 10)</td><td class="result-cell">3×4 array: 0,10,20,30,40…</td></tr>
+      <tr><td class="formula-cell">=SEQUENCE(12, 1, DATE(2024,1,1), 30)</td><td class="result-cell">12 month-start dates</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> SEQUENCE spills results into adjacent cells automatically — no need to copy the formula down.</div>
+  </div>
+</div>
+
+<!-- LET -->
+<div class="formula-card" id="f-let">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">36</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LET <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Assign names to intermediate calculations within a formula</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">LET assigns names to calculation results inside a formula. This makes complex formulas readable, avoids repeating calculations, and improves performance.</p>
+    <div class="syntax-box">=LET(name1, value1, [name2, value2, ...], calculation)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=LET(tax, A1*0.18, total, A1+tax, total)</td><td>Calculate tax then total — each used once</td></tr>
+      <tr><td class="formula-cell">=LET(data, A1:A100, avg, AVERAGE(data), FILTER(data, data>avg))</td><td>Filter values above average — data used twice, computed once</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Benefit:</strong> Without LET, a formula like =A1*0.18+A1 calculates A1 twice. LET computes intermediate values once and reuses them — cleaner and faster.</div>
+  </div>
+</div>
+
+<!-- ISO.CEILING -->
+<div class="formula-card" id="f-iso-ceiling">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">37</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ISO.CEILING <span class="formula-tag tag-math">Math</span></div>
+      <div class="formula-subtitle">Rounds up to nearest integer or multiple — ISO standard behavior</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=ISO.CEILING(number, [significance])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ISO.CEILING(4.3, 1)</td><td class="result-cell">5</td></tr>
+      <tr><td class="formula-cell">=ISO.CEILING(-4.3, 1)</td><td class="result-cell">-4  (always rounds up toward +∞)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> ISO.CEILING always rounds toward positive infinity regardless of sign — same behavior as CEILING.PRECISE.</div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════ -->
 <!--          TEXT FORMULAS                 -->
 <!-- ═══════════════════════════════════════ -->
@@ -1325,6 +1595,196 @@ body {
   </div>
 </div>
 
+<!-- LEN -->
+<div class="formula-card" id="f-len">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">16</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LEN <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Returns the number of characters in a text string</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=LEN(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=LEN("Excel")</td><td>Excel</td><td class="result-cell">5</td></tr>
+      <tr><td class="formula-cell">=LEN("  hello  ")</td><td>With spaces</td><td class="result-cell">9  (spaces counted)</td></tr>
+      <tr><td class="formula-cell">=LEN(TRIM(A1))</td><td>After trimming</td><td class="result-cell">Clean length</td></tr>
+      <tr><td class="formula-cell">=LEN(A1)&gt;10</td><td>Check if too long</td><td class="result-cell">TRUE/FALSE</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Combine LEN with MID/LEFT/RIGHT: =MID(A1, LEN(A1)-3, 4) extracts the last 4 characters dynamically.</div>
+  </div>
+</div>
+
+<!-- TEXT -->
+<div class="formula-card" id="f-text">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">17</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TEXT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Converts a number to text in a specified format</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">TEXT formats numbers, dates, and times as text strings. Essential when concatenating a number with text — otherwise Excel shows the raw serial number.</p>
+    <div class="syntax-box purple">=TEXT(value, format_text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TEXT(45000, "#,##0")</td><td>45000</td><td class="result-cell">45,000</td></tr>
+      <tr><td class="formula-cell">=TEXT(TODAY(), "DD-MMM-YYYY")</td><td>Today's date</td><td class="result-cell">01-Apr-2026</td></tr>
+      <tr><td class="formula-cell">=TEXT(0.75, "0%")</td><td>0.75</td><td class="result-cell">75%</td></tr>
+      <tr><td class="formula-cell">="Sales: "&TEXT(A1,"₹#,##0.00")</td><td>Concatenate with currency</td><td class="result-cell">Sales: ₹1,23,456.00</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> TEXT converts numbers to text — you cannot do math on the result. Use it only for display/concatenation purposes.</div>
+  </div>
+</div>
+
+<!-- VALUE -->
+<div class="formula-card" id="f-value">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">18</span>
+    <div class="formula-title-area">
+      <div class="formula-name">VALUE <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Converts a text string representing a number into a real number</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=VALUE(text)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=VALUE("1234")</td><td>"1234" (text)</td><td class="result-cell">1234  (number)</td></tr>
+      <tr><td class="formula-cell">=VALUE("12:30 PM")</td><td>Time as text</td><td class="result-cell">0.520833… (time serial)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Use when numbers are imported as text (left-aligned in cells). Alternative: multiply by 1 (=A1*1) or use double-negative (=--A1).</div>
+  </div>
+</div>
+
+<!-- EXACT -->
+<div class="formula-card" id="f-exact">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">19</span>
+    <div class="formula-title-area">
+      <div class="formula-name">EXACT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Case-sensitive text comparison — returns TRUE or FALSE</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=EXACT(text1, text2)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=EXACT("Excel","excel")</td><td class="result-cell">FALSE  (case differs)</td></tr>
+      <tr><td class="formula-cell">=EXACT("Excel","Excel")</td><td class="result-cell">TRUE</td></tr>
+      <tr><td class="formula-cell">=EXACT(A1,B1)</td><td class="result-cell">TRUE only if identical (case-sensitive)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> Regular = operator is NOT case-sensitive ("excel"="Excel" returns TRUE). Use EXACT when case matters — passwords, codes, IDs.</div>
+  </div>
+</div>
+
+<!-- TEXTJOIN -->
+<div class="formula-card" id="f-textjoin">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">20</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TEXTJOIN <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Joins text from a range with a delimiter, optionally ignoring blanks</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=TEXTJOIN(delimiter, ignore_empty, text1, [text2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TEXTJOIN(", ", TRUE, A1:A10)</td><td class="result-cell">a, b, c, d  (blanks skipped)</td></tr>
+      <tr><td class="formula-cell">=TEXTJOIN(" | ", FALSE, A1:A5)</td><td class="result-cell">Includes blanks as empty segments</td></tr>
+      <tr><td class="formula-cell">=TEXTJOIN(CHAR(10), TRUE, A1:A20)</td><td class="result-cell">Newline-separated list in one cell</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Power use:</strong> =TEXTJOIN(", ", TRUE, IF(B1:B20="Delhi", A1:A20, "")) — list all names from Delhi in one cell (Ctrl+Shift+Enter in older Excel).</div>
+  </div>
+</div>
+
+<!-- TEXTSPLIT -->
+<div class="formula-card" id="f-textsplit">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">21</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TEXTSPLIT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Splits text into rows or columns using delimiters — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=TEXTSPLIT(text, col_delimiter, [row_delimiter], [ignore_empty], [pad_with])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TEXTSPLIT("a,b,c", ",")</td><td>a,b,c</td><td class="result-cell">a | b | c  (3 columns)</td></tr>
+      <tr><td class="formula-cell">=TEXTSPLIT("a,b;c,d", ",", ";")</td><td>Mixed delimiters</td><td class="result-cell">2×2 array</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Reverse of TEXTJOIN. Together they let you split → process → rejoin — a powerful text manipulation pipeline.</div>
+  </div>
+</div>
+
+<!-- TEXTBEFORE / TEXTAFTER -->
+<div class="formula-card" id="f-textbefore-after">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">22</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TEXTBEFORE / TEXTAFTER <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Extract text before or after a specific character — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=TEXTBEFORE(text, delimiter, [instance_num], [match_mode], [match_end])
+=TEXTAFTER(text, delimiter, [instance_num], [match_mode], [match_end])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TEXTBEFORE("John Smith", " ")</td><td>John Smith</td><td class="result-cell">John</td></tr>
+      <tr><td class="formula-cell">=TEXTAFTER("John Smith", " ")</td><td>John Smith</td><td class="result-cell">Smith</td></tr>
+      <tr><td class="formula-cell">=TEXTBEFORE("a.b.c.d", ".", 2)</td><td>a.b.c.d</td><td class="result-cell">a.b  (before 2nd dot)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Far simpler than FIND+LEFT/RIGHT combinations for splitting text. Works perfectly with email addresses, file paths, and names.</div>
+  </div>
+</div>
+
+<!-- NUMBERVALUE -->
+<div class="formula-card" id="f-numbervalue">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">23</span>
+    <div class="formula-title-area">
+      <div class="formula-name">NUMBERVALUE <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Converts text to number with custom decimal/group separators</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=NUMBERVALUE(text, [decimal_separator], [group_separator])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Input</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=NUMBERVALUE("1.234,56", ",", ".")</td><td>European format</td><td class="result-cell">1234.56</td></tr>
+      <tr><td class="formula-cell">=NUMBERVALUE("2 500,75", ",", " ")</td><td>Space as thousands sep</td><td class="result-cell">2500.75</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> Essential for importing data from different regional formats where comma and period roles are swapped.</div>
+  </div>
+</div>
+
+<!-- ARRAYTOTEXT / VALUETOTEXT -->
+<div class="formula-card" id="f-arraytotext">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">24</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ARRAYTOTEXT / VALUETOTEXT <span class="formula-tag tag-text">Text</span></div>
+      <div class="formula-subtitle">Convert arrays or values to text representations</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box purple">=ARRAYTOTEXT(array, [format])    — 0=concise, 1=strict
+=VALUETOTEXT(value, [format])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ARRAYTOTEXT(A1:C1, 0)</td><td class="result-cell">value1, value2, value3</td></tr>
+      <tr><td class="formula-cell">=ARRAYTOTEXT(A1:C1, 1)</td><td class="result-cell">{"val1","val2","val3"}  (strict/array format)</td></tr>
+      <tr><td class="formula-cell">=VALUETOTEXT(TRUE)</td><td class="result-cell">TRUE  (logical as text)</td></tr>
+    </table>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════ -->
 <!--          DATE & TIME                   -->
 <!-- ═══════════════════════════════════════ -->
@@ -1525,6 +1985,132 @@ body {
   </div>
 </div>
 
+<!-- DAYS / DAYS360 -->
+<div class="formula-card" id="f-days">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">15</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DAYS / DAYS360 <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns number of days between two dates</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=DAYS(end_date, start_date)
+=DAYS360(start_date, end_date, [method])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DAYS("31-Dec-2024","1-Jan-2024")</td><td class="result-cell">365  (actual days)</td></tr>
+      <tr><td class="formula-cell">=DAYS360("1-Jan-2024","31-Dec-2024")</td><td class="result-cell">360  (based on 12×30-day months)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> DAYS360 uses a 360-day year assumption, commonly used in financial instruments like bonds. Use DAYS for actual calendar days.</div>
+  </div>
+</div>
+
+<!-- NETWORKDAYS -->
+<div class="formula-card" id="f-networkdays">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">16</span>
+    <div class="formula-title-area">
+      <div class="formula-name">NETWORKDAYS / NETWORKDAYS.INTL <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Count working days between two dates, excluding weekends &amp; holidays</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=NETWORKDAYS(start_date, end_date, [holidays])
+=NETWORKDAYS.INTL(start_date, end_date, [weekend], [holidays])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=NETWORKDAYS("1-Jan-2024","31-Jan-2024")</td><td>Jan 2024 working days</td><td class="result-cell">23</td></tr>
+      <tr><td class="formula-cell">=NETWORKDAYS(A1,B1,holidays)</td><td>Excluding holiday list</td><td class="result-cell">Business days</td></tr>
+      <tr><td class="formula-cell">=NETWORKDAYS.INTL(A1,B1,"0000011")</td><td>Sat+Sun off (default)</td><td class="result-cell">Working days</td></tr>
+      <tr><td class="formula-cell">=NETWORKDAYS.INTL(A1,B1,7)</td><td>Fri+Sat as weekend</td><td class="result-cell">Adjusted working days</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> NETWORKDAYS.INTL weekend codes: 1=Sat+Sun, 2=Sun+Mon, 7=Fri+Sat. Or use "0000011" string (0=workday, 1=weekend) for custom schedules.</div>
+  </div>
+</div>
+
+<!-- WORKDAY.INTL -->
+<div class="formula-card" id="f-workday-intl">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">17</span>
+    <div class="formula-title-area">
+      <div class="formula-name">WORKDAY.INTL <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Add business days with customizable weekend definition</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=WORKDAY.INTL(start_date, days, [weekend], [holidays])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=WORKDAY.INTL(A1, 10, 7)</td><td>10 work days ahead with Fri+Sat weekend</td></tr>
+      <tr><td class="formula-cell">=WORKDAY.INTL(A1, 30, "0000011", holidays)</td><td>Custom weekend + holidays</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TIME / TIMEVALUE / DATEVALUE -->
+<div class="formula-card" id="f-time-timevalue">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">18</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TIME / TIMEVALUE / DATEVALUE <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Create or convert time and date values</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=TIME(hour, minute, second)      — create a time value
+=TIMEVALUE("text time")           — convert text to time serial
+=DATEVALUE("text date")           — convert text to date serial</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=TIME(14, 30, 0)</td><td class="result-cell">2:30 PM  (0.604167 serial)</td></tr>
+      <tr><td class="formula-cell">=TIMEVALUE("2:30 PM")</td><td class="result-cell">0.604167</td></tr>
+      <tr><td class="formula-cell">=DATEVALUE("1 Jan 2024")</td><td class="result-cell">45292  (date serial)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- WEEKNUM / ISOWEEKNUM -->
+<div class="formula-card" id="f-weeknum">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">19</span>
+    <div class="formula-title-area">
+      <div class="formula-name">WEEKNUM / ISOWEEKNUM <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns the week number of a date within the year</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=WEEKNUM(date, [return_type])
+=ISOWEEKNUM(date)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=WEEKNUM("15-Apr-2024")</td><td class="result-cell">16  (week of year, Sun start)</td></tr>
+      <tr><td class="formula-cell">=WEEKNUM("15-Apr-2024", 2)</td><td class="result-cell">16  (week starting Monday)</td></tr>
+      <tr><td class="formula-cell">=ISOWEEKNUM("15-Apr-2024")</td><td class="result-cell">16  (ISO 8601 — weeks start Monday)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- YEARFRAC -->
+<div class="formula-card" id="f-yearfrac">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">20</span>
+    <div class="formula-title-area">
+      <div class="formula-name">YEARFRAC <span class="formula-tag tag-date">Date</span></div>
+      <div class="formula-subtitle">Returns the fractional year between two dates</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box green">=YEARFRAC(start_date, end_date, [basis])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=YEARFRAC("1-Jan-2024","1-Jul-2024")</td><td class="result-cell">0.5  (half year)</td></tr>
+      <tr><td class="formula-cell">=INT(YEARFRAC(DOB, TODAY()))</td><td class="result-cell">Precise age calculation</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> More precise for age calculation than DATEDIF("Y") — handles partial years correctly. basis 0=US 30/360, 1=actual/actual, 3=actual/365.</div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════ -->
 <!--          LOGICAL FUNCTIONS             -->
 <!-- ═══════════════════════════════════════ -->
@@ -1681,6 +2267,157 @@ body {
   </div>
 </div>
 
+<!-- IFS -->
+<div class="formula-card" id="f-ifs">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">10</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IFS <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Tests multiple conditions in order, returns first TRUE result</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">IFS replaces nested IF statements with a clean list of condition-value pairs. Excel 2019+ only.</p>
+    <div class="syntax-box yellow">=IFS(condition1, value1, condition2, value2, ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=IFS(A1>90,"A", A1>75,"B", A1>60,"C", TRUE,"D")</td><td class="result-cell">Grade without nested IFs</td></tr>
+      <tr><td class="formula-cell">=IFS(B1="CEO","₹50L", B1="Manager","₹15L", TRUE,"₹5L")</td><td class="result-cell">Salary by role</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Tip:</strong> Use TRUE as the last condition as a catch-all "else" — equivalent to the final value_if_false in nested IFs.</div>
+  </div>
+</div>
+
+<!-- SWITCH -->
+<div class="formula-card" id="f-switch">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">11</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SWITCH <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Match a value against a list and return the corresponding result</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=SWITCH(expression, value1, result1, [value2, result2, ...], [default])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SWITCH(A1,"Mon","Monday","Tue","Tuesday","Wed","Wednesday","Other")</td><td class="result-cell">Expands abbreviations</td></tr>
+      <tr><td class="formula-cell">=SWITCH(WEEKDAY(TODAY(),2),6,"Weekend",7,"Weekend","Weekday")</td><td class="result-cell">Weekday/Weekend label</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 SWITCH vs IFS:</strong> SWITCH is cleaner when testing one expression against multiple exact values. IFS is better when conditions involve different comparisons (>, &lt;, etc.).</div>
+  </div>
+</div>
+
+<!-- IFNA -->
+<div class="formula-card" id="f-ifna">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">12</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IFNA <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Returns custom value only for #N/A errors, passes other errors through</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=IFNA(value, value_if_na)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=IFNA(VLOOKUP(A1,B:C,2,0),"Not Found")</td><td>Handle VLOOKUP misses only</td></tr>
+      <tr><td class="formula-cell">=IFNA(MATCH(A1,B:B,0),"—")</td><td>Handle MATCH no-result</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 IFNA vs IFERROR:</strong> IFNA only catches #N/A. IFERROR catches ALL errors. Prefer IFNA with VLOOKUP/MATCH — this way formula errors (#REF!, #VALUE!) still surface as visible errors for debugging.</div>
+  </div>
+</div>
+
+<!-- XOR -->
+<div class="formula-card" id="f-xor">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">13</span>
+    <div class="formula-title-area">
+      <div class="formula-name">XOR <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Exclusive OR — TRUE if odd number of conditions are TRUE</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=XOR(logical1, [logical2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=XOR(TRUE, FALSE)</td><td class="result-cell">TRUE  (exactly one is TRUE)</td></tr>
+      <tr><td class="formula-cell">=XOR(TRUE, TRUE)</td><td class="result-cell">FALSE  (both TRUE cancels out)</td></tr>
+      <tr><td class="formula-cell">=XOR(A1>0, B1>0)</td><td class="result-cell">TRUE if only one is positive</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TRUE / FALSE -->
+<div class="formula-card" id="f-true-false">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">14</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TRUE / FALSE <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Return the literal logical values TRUE or FALSE</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=TRUE()    =FALSE()</div>
+    <p class="desc">These functions return literal Boolean values. Mostly used in compatibility formulas or when building conditional logic that expects explicit TRUE/FALSE returns.</p>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=IF(AND(A1>0,B1>0), TRUE(), FALSE())</td><td class="result-cell">TRUE or FALSE as Boolean</td></tr>
+      <tr><td class="formula-cell">=SWITCH(A1>100, TRUE(), "Big", FALSE(), "Small")</td><td class="result-cell">Used as SWITCH values</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- LAMBDA -->
+<div class="formula-card" id="f-lambda">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">15</span>
+    <div class="formula-title-area">
+      <div class="formula-name">LAMBDA <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">Create custom reusable functions without VBA — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">LAMBDA lets you define custom named functions in Excel without VBA. Name them in the Name Manager and reuse them across the workbook.</p>
+    <div class="syntax-box yellow">=LAMBDA([parameter1, ...], formula)</div>
+    <table class="ex-table">
+      <tr><th>Usage</th><th>Description</th></tr>
+      <tr><td class="formula-cell">Define: DOUBLE = LAMBDA(x, x*2)</td><td>Name in Name Manager</td></tr>
+      <tr><td class="formula-cell">Use: =DOUBLE(A1)</td><td>Returns A1×2</td></tr>
+      <tr><td class="formula-cell">=LAMBDA(x,y, IF(x>y,x,y))(A1,B1)</td><td>Inline self-calling LAMBDA (max of two)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> Define in Name Manager (Ctrl+F3): Name=CircleArea, Refers To==LAMBDA(r, PI()*r^2). Then =CircleArea(A1) returns the area of a circle.</div>
+  </div>
+</div>
+
+<!-- MAP / BYROW / BYCOL / REDUCE / SCAN / MAKEARRAY -->
+<div class="formula-card" id="f-lambda-helpers">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">16</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MAP / BYROW / BYCOL / REDUCE / SCAN / MAKEARRAY <span class="formula-tag tag-logical">Logical</span></div>
+      <div class="formula-subtitle">LAMBDA helper functions for array operations — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box yellow">=MAP(array, LAMBDA(x, formula))             — transform each element
+=BYROW(array, LAMBDA(row, formula))         — apply function row-by-row
+=BYCOL(array, LAMBDA(col, formula))         — apply function column-by-column
+=REDUCE([initial], array, LAMBDA(acc, x, formula))  — accumulate to single value
+=SCAN([initial], array, LAMBDA(acc, x, formula))    — running accumulated array
+=MAKEARRAY(rows, cols, LAMBDA(r, c, formula))       — build array by position</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=MAP(A1:A10, LAMBDA(x, x*1.18))</td><td>Add 18% GST to each value</td></tr>
+      <tr><td class="formula-cell">=BYROW(A1:C5, LAMBDA(r, SUM(r)))</td><td>Row-wise sum of a 2D array</td></tr>
+      <tr><td class="formula-cell">=BYCOL(A1:C5, LAMBDA(c, MAX(c)))</td><td>Column-wise max</td></tr>
+      <tr><td class="formula-cell">=REDUCE(0, A1:A10, LAMBDA(a,x, a+x))</td><td>Custom running sum (same as SUM)</td></tr>
+      <tr><td class="formula-cell">=SCAN(0, A1:A10, LAMBDA(a,x, a+x))</td><td>Running cumulative total array</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> These functions require LAMBDA support (Microsoft 365 / Excel 2021+). They enable functional programming patterns directly in spreadsheet formulas.</div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════ -->
 <!--        LOOKUP & REFERENCE              -->
 <!-- ═══════════════════════════════════════ -->
@@ -1810,6 +2547,327 @@ body {
   </div>
 </div>
 
+<!-- XLOOKUP -->
+<div class="formula-card" id="f-xlookup">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">06</span>
+    <div class="formula-title-area">
+      <div class="formula-name">XLOOKUP <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Modern replacement for VLOOKUP/HLOOKUP — more powerful &amp; flexible</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">XLOOKUP searches any direction, doesn't need the lookup column first, supports multiple results, and returns an entire row/column. Excel 2021+ / Microsoft 365.</p>
+    <div class="syntax-box pink">=XLOOKUP(lookup_value, lookup_array, return_array, [if_not_found], [match_mode], [search_mode])</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">match_mode</span><span class="param-desc">0=exact, -1=exact or smaller, 1=exact or larger, 2=wildcard</span></div>
+      <div class="param-row"><span class="param-name">search_mode</span><span class="param-desc">1=first-to-last, -1=last-to-first, 2=binary ascending, -2=binary descending</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=XLOOKUP(A2, B:B, C:C, "Not Found")</td><td>Basic lookup — find A2 in B, return C</td></tr>
+      <tr><td class="formula-cell">=XLOOKUP(A2, C:C, A:A, "—")</td><td>Reverse lookup — look LEFT (impossible with VLOOKUP)</td></tr>
+      <tr><td class="formula-cell">=XLOOKUP(A2, B:B, C:F)</td><td>Return multiple columns at once</td></tr>
+      <tr><td class="formula-cell">=XLOOKUP(A2, B:B, C:C, , 0, -1)</td><td>Find last occurrence</td></tr>
+      <tr><td class="formula-cell">=XLOOKUP("*"&A2&"*", B:B, C:C, , 2)</td><td>Wildcard partial match</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 XLOOKUP vs VLOOKUP:</strong><br>
+    ✅ No col_index_num — reference the return column directly<br>
+    ✅ Returns left of lookup column<br>
+    ✅ Built-in if_not_found (no IFERROR needed)<br>
+    ✅ Returns arrays of results<br>
+    ✅ Exact match is default (no FALSE needed)</div>
+  </div>
+</div>
+
+<!-- XMATCH -->
+<div class="formula-card" id="f-xmatch">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">07</span>
+    <div class="formula-title-area">
+      <div class="formula-name">XMATCH <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Enhanced MATCH — returns position with more search options</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=XMATCH(lookup_value, lookup_array, [match_mode], [search_mode])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=XMATCH("Mango", A1:A10)</td><td class="result-cell">Position of "Mango" (exact, default)</td></tr>
+      <tr><td class="formula-cell">=XMATCH("M*", A1:A10, 2)</td><td class="result-cell">First item starting with M (wildcard)</td></tr>
+      <tr><td class="formula-cell">=XMATCH("Mango", A1:A10, 0, -1)</td><td class="result-cell">Last occurrence position</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CHOOSE -->
+<div class="formula-card" id="f-choose">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">08</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CHOOSE <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Returns a value from a list based on an index number</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=CHOOSE(index_num, value1, [value2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CHOOSE(2, "Mon","Tue","Wed","Thu","Fri")</td><td class="result-cell">Tue</td></tr>
+      <tr><td class="formula-cell">=CHOOSE(WEEKDAY(TODAY()), "Sun","Mon","Tue","Wed","Thu","Fri","Sat")</td><td class="result-cell">Today's day name</td></tr>
+      <tr><td class="formula-cell">=SUM(CHOOSE({1,2}, A1:A10, B1:B10))</td><td class="result-cell">Sum both ranges (array trick)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Reverse VLOOKUP trick:</strong> =VLOOKUP(A1, CHOOSE({1,2}, C:C, A:A), 2, 0) — use CHOOSE to swap column order, enabling VLOOKUP to return left-side columns.</div>
+  </div>
+</div>
+
+<!-- FILTER -->
+<div class="formula-card" id="f-filter">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">09</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FILTER <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Filter a range based on conditions and spill results — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=FILTER(array, include, [if_empty])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=FILTER(A1:C20, B1:B20="Delhi", "None")</td><td>All rows where B = "Delhi"</td></tr>
+      <tr><td class="formula-cell">=FILTER(A1:C20, (B1:B20="Delhi")*(C1:C20>50000))</td><td>Delhi AND salary > 50000 (AND logic)</td></tr>
+      <tr><td class="formula-cell">=FILTER(A1:C20, (B1:B20="Delhi")+(B1:B20="Mumbai"))</td><td>Delhi OR Mumbai (OR logic)</td></tr>
+      <tr><td class="formula-cell">=SORT(FILTER(A:C, B:B="Manager"))</td><td>Filter managers then sort</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> FILTER is a dynamic array function — results automatically spill into adjacent cells. If source data changes, results update instantly. No need for AutoFilter or helper columns!</div>
+  </div>
+</div>
+
+<!-- SORT / SORTBY -->
+<div class="formula-card" id="f-sort">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">10</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SORT / SORTBY <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Sort a range as a dynamic spilled array — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=SORT(array, [sort_index], [sort_order], [by_col])
+=SORTBY(array, by_array1, [sort_order1], [by_array2], [sort_order2]...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=SORT(A1:C20)</td><td>Sort by first column, ascending</td></tr>
+      <tr><td class="formula-cell">=SORT(A1:C20, 3, -1)</td><td>Sort by 3rd column, descending</td></tr>
+      <tr><td class="formula-cell">=SORTBY(A1:C20, C1:C20, -1, B1:B20, 1)</td><td>Sort by C desc, then B asc</td></tr>
+      <tr><td class="formula-cell">=SORT(UNIQUE(A1:A100))</td><td>Sorted unique list</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- UNIQUE -->
+<div class="formula-card" id="f-unique">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">11</span>
+    <div class="formula-title-area">
+      <div class="formula-name">UNIQUE <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Returns a list of unique values removing duplicates — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=UNIQUE(array, [by_col], [exactly_once])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=UNIQUE(A1:A100)</td><td>Unique values from column A</td></tr>
+      <tr><td class="formula-cell">=UNIQUE(A1:C20)</td><td>Unique rows across 3 columns</td></tr>
+      <tr><td class="formula-cell">=UNIQUE(A1:A100,,TRUE)</td><td>Values that appear EXACTLY once</td></tr>
+      <tr><td class="formula-cell">=SORT(UNIQUE(A1:A100))</td><td>Sorted unique list</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- INDIRECT -->
+<div class="formula-card" id="f-indirect">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">12</span>
+    <div class="formula-title-area">
+      <div class="formula-name">INDIRECT <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Returns a reference specified by a text string — dynamic references</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=INDIRECT(ref_text, [a1])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=INDIRECT("A1")</td><td>Same as =A1 but text-based</td></tr>
+      <tr><td class="formula-cell">=INDIRECT(A1)</td><td>A1 contains "B5" → returns B5's value</td></tr>
+      <tr><td class="formula-cell">=SUM(INDIRECT(A1&"!B:B"))</td><td>Sum col B of sheet named in A1</td></tr>
+      <tr><td class="formula-cell">=VLOOKUP(B1, INDIRECT(A1&"!A:C"), 2, 0)</td><td>Dynamic VLOOKUP across sheets</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> INDIRECT is volatile — recalculates on every change. Use sparingly. Also, INDIRECT references don't update when rows/columns are inserted.</div>
+  </div>
+</div>
+
+<!-- ROW / ROWS / COLUMN / COLUMNS -->
+<div class="formula-card" id="f-row-column">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">13</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ROW / ROWS / COLUMN / COLUMNS <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Return row or column numbers and counts</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=ROW([reference])      — row number
+=ROWS(array)           — number of rows in range
+=COLUMN([reference])   — column number
+=COLUMNS(array)        — number of columns in range</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=ROW()</td><td class="result-cell">Current row number</td></tr>
+      <tr><td class="formula-cell">=ROW(A5)</td><td class="result-cell">5</td></tr>
+      <tr><td class="formula-cell">=ROWS(A1:A10)</td><td class="result-cell">10</td></tr>
+      <tr><td class="formula-cell">=COLUMN(D1)</td><td class="result-cell">4</td></tr>
+      <tr><td class="formula-cell">=ROW()-ROW($A$1)+1</td><td class="result-cell">Relative row counter (1,2,3…)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TRANSPOSE -->
+<div class="formula-card" id="f-transpose">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">14</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TRANSPOSE <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Converts rows to columns and columns to rows</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=TRANSPOSE(array)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=TRANSPOSE(A1:E1)</td><td>Converts 1-row range to 1-column (Excel 365: just enter normally)</td></tr>
+      <tr><td class="formula-cell">=TRANSPOSE(A1:C5)</td><td>3×5 → 5×3 array (rows become columns)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 Legacy Excel:</strong> Select target range, type =TRANSPOSE(...), press Ctrl+Shift+Enter. In Excel 365 it spills automatically.</div>
+  </div>
+</div>
+
+<!-- HSTACK / VSTACK -->
+<div class="formula-card" id="f-hstack-vstack">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">15</span>
+    <div class="formula-title-area">
+      <div class="formula-name">HSTACK / VSTACK <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Combine arrays horizontally or vertically — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=HSTACK(array1, array2, ...)   — combine side by side
+=VSTACK(array1, array2, ...)   — stack vertically</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=HSTACK(A1:B10, D1:E10)</td><td>Combine non-adjacent columns into one range</td></tr>
+      <tr><td class="formula-cell">=VSTACK(Jan_Data, Feb_Data, Mar_Data)</td><td>Stack 3 months of data vertically</td></tr>
+      <tr><td class="formula-cell">=VSTACK({"Name","Sales"}, A2:B100)</td><td>Add header row to data array</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CHOOSECOLS / CHOOSEROWS -->
+<div class="formula-card" id="f-choosecols-rows">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">16</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CHOOSECOLS / CHOOSEROWS <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Return specific columns or rows from an array — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=CHOOSECOLS(array, col_num1, [col_num2], ...)
+=CHOOSEROWS(array, row_num1, [row_num2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=CHOOSECOLS(A1:E10, 1, 3, 5)</td><td>Return only columns 1, 3, 5</td></tr>
+      <tr><td class="formula-cell">=CHOOSECOLS(A1:E10, -1)</td><td>Return last column (negative = from end)</td></tr>
+      <tr><td class="formula-cell">=CHOOSEROWS(A1:E10, 1, 5, 10)</td><td>Return rows 1, 5, and 10</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TAKE / TOCOL / TOROW / WRAPCOLS / WRAPROWS / TRIMRANGE -->
+<div class="formula-card" id="f-array-tools">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">17</span>
+    <div class="formula-title-area">
+      <div class="formula-name">TAKE / TOCOL / TOROW / WRAPCOLS / WRAPROWS / TRIMRANGE <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Array shaping and manipulation tools — Excel 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=TAKE(array, rows, [cols])          — take first/last N rows or columns
+=TOCOL(array, [ignore], [scan_by_col]) — flatten to one column
+=TOROW(array, [ignore], [scan_by_col]) — flatten to one row
+=WRAPCOLS(vector, wrap_count, [pad])   — wrap vector into columns
+=WRAPROWS(vector, wrap_count, [pad])   — wrap vector into rows
+=TRIMRANGE(array)                      — remove blank edge rows/columns</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=TAKE(A1:C20, 5)</td><td>First 5 rows; TAKE(…,-3) = last 3 rows</td></tr>
+      <tr><td class="formula-cell">=TOCOL(A1:C5)</td><td>Flatten 3×5 range into 15-row column</td></tr>
+      <tr><td class="formula-cell">=TOROW(A1:C5)</td><td>Flatten 3×5 range into 15-column row</td></tr>
+      <tr><td class="formula-cell">=WRAPCOLS(A1:A12, 3)</td><td>Wrap 12 items into 4×3 column layout</td></tr>
+      <tr><td class="formula-cell">=WRAPROWS(A1:A12, 4)</td><td>Wrap 12 items into 3×4 row layout</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡</strong> TOCOL(A1:E10, 1) — the second argument 1 ignores blank cells, 2 ignores errors, 3 ignores both. Great for consolidating sparse data.</div>
+  </div>
+</div>
+
+<!-- FORMULATEXT / HYPERLINK / IMAGE / GETPIVOTDATA -->
+<div class="formula-card" id="f-special-lookup">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">18</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FORMULATEXT / HYPERLINK / IMAGE / GETPIVOTDATA <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Special reference and content functions</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=FORMULATEXT(reference)                     — shows formula as text
+=HYPERLINK(link_location, [friendly_name])  — clickable link in cell
+=IMAGE(source, [alt_text], [sizing])        — embed image from URL (365)
+=GETPIVOTDATA(data_field, pivot, [field, item, ...])  — extract from Pivot</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FORMULATEXT(B1)</td><td class="result-cell">Shows the formula in B1 as text, e.g. "=SUM(A1:A10)"</td></tr>
+      <tr><td class="formula-cell">=HYPERLINK("https://example.com","Visit")</td><td class="result-cell">Clickable "Visit" link</td></tr>
+      <tr><td class="formula-cell">=HYPERLINK("mailto:<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="59312b193a363429383720773a3634">[email&#160;protected]</a>","Email HR")</td><td class="result-cell">Email link</td></tr>
+      <tr><td class="formula-cell">=IMAGE("https://example.com/logo.png")</td><td class="result-cell">Displays image in cell</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- GROUPBY / PIVOTBY -->
+<div class="formula-card" id="f-groupby-pivotby">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">19</span>
+    <div class="formula-title-area">
+      <div class="formula-name">GROUPBY / PIVOTBY <span class="formula-tag tag-lookup">Lookup</span></div>
+      <div class="formula-subtitle">Formula-based pivot tables — Microsoft 365 (2024+)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box pink">=GROUPBY(row_fields, values, function, [field_headers], [total_depth], [sort_order], [filter_array])
+=PIVOTBY(row_fields, col_fields, values, function, ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=GROUPBY(A2:A100, C2:C100, SUM)</td><td>Sum of C grouped by A — like a 1-column pivot</td></tr>
+      <tr><td class="formula-cell">=PIVOTBY(A2:A100, B2:B100, C2:C100, SUM)</td><td>2D pivot: rows=A, cols=B, values=SUM(C)</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> GROUPBY and PIVOTBY create dynamic pivot-table-like summaries entirely in formulas — no need to insert a PivotTable. Results spill automatically and update with source data.</div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════ -->
 <!--          FINANCIAL                     -->
 <!-- ═══════════════════════════════════════ -->
@@ -1920,6 +2978,850 @@ body {
       <tr><td class="formula-cell">=FV(7%, 10, 0, -100000)</td><td>₹1L one-time @ 7% for 10 yrs</td><td class="result-cell">196,715</td></tr>
     </table>
     <div class="tip-box"><strong>💡 SIP Calculator:</strong> =FV(12%/12, 240, -5000, 0, 1) — type=1 means SIP paid at START of each month, giving slightly better returns.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          STATISTICAL                   -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-statistical">
+  <div class="cat-icon math" style="background:linear-gradient(135deg,#1a1f3d,#6366f1)">📊</div>
+  <div class="cat-title">Statistical Functions</div>
+</div>
+
+<!-- MEDIAN -->
+<div class="formula-card" id="f-median">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">MEDIAN <span class="formula-tag tag-math">Statistical</span></div>
+      <div class="formula-subtitle">Returns the middle value of a dataset</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">MEDIAN is more robust than AVERAGE for skewed data — it's not pulled by extreme outliers. For even counts it returns the average of the two middle values.</p>
+    <div class="syntax-box">=MEDIAN(number1, [number2], ...)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Data</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=MEDIAN(1,2,3,4,5)</td><td>Odd count</td><td class="result-cell">3  (middle value)</td></tr>
+      <tr><td class="formula-cell">=MEDIAN(1,2,3,4)</td><td>Even count</td><td class="result-cell">2.5  (average of 2&3)</td></tr>
+      <tr><td class="formula-cell">=MEDIAN(A1:A100)</td><td>Dataset</td><td class="result-cell">Median salary / price</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Real-world:</strong> For salary analysis, MEDIAN is more meaningful than AVERAGE — one executive earning ₹2Cr doesn't distort the median like it does the average.</div>
+  </div>
+</div>
+
+<!-- AVERAGEIF / AVERAGEIFS -->
+<div class="formula-card" id="f-averageif">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">AVERAGEIF / AVERAGEIFS <span class="formula-tag tag-math">Statistical</span></div>
+      <div class="formula-subtitle">Average of cells meeting one or multiple conditions</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=AVERAGEIF(range, criteria, [average_range])
+=AVERAGEIFS(avg_range, range1, criteria1, [range2, criteria2, ...])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=AVERAGEIF(A:A, "Delhi", C:C)</td><td>Average salary for Delhi employees</td></tr>
+      <tr><td class="formula-cell">=AVERAGEIF(B:B, "&lt;&gt;0", B:B)</td><td>Average excluding zeros</td></tr>
+      <tr><td class="formula-cell">=AVERAGEIFS(C:C, A:A,"Delhi", B:B,"Manager")</td><td>Average salary of Delhi Managers</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SMALL / LARGE -->
+<div class="formula-card" id="f-small-large">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">SMALL / LARGE <span class="formula-tag tag-math">Statistical</span></div>
+      <div class="formula-subtitle">Return the k-th smallest or largest value</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=SMALL(array, k)    =LARGE(array, k)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=SMALL(A1:A20, 1)</td><td class="result-cell">Minimum (same as MIN)</td></tr>
+      <tr><td class="formula-cell">=SMALL(A1:A20, 3)</td><td class="result-cell">3rd smallest value</td></tr>
+      <tr><td class="formula-cell">=LARGE(A1:A20, 1)</td><td class="result-cell">Maximum (same as MAX)</td></tr>
+      <tr><td class="formula-cell">=LARGE(A1:A20, 3)</td><td class="result-cell">3rd largest value (bronze medal!)</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Top-N analysis:</strong> =LARGE(Sales, ROW(A1)) dragged down gives Top 1, Top 2, Top 3… values automatically.</div>
+  </div>
+</div>
+
+<!-- RANK.EQ / RANK.AVG -->
+<div class="formula-card" id="f-rank">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">04</span>
+    <div class="formula-title-area">
+      <div class="formula-name">RANK.EQ / RANK.AVG <span class="formula-tag tag-math">Statistical</span></div>
+      <div class="formula-subtitle">Returns the rank of a number in a list</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=RANK.EQ(number, ref, [order])    — top rank for ties
+=RANK.AVG(number, ref, [order])   — average rank for ties</div>
+    <p class="desc">order: 0 or omitted = descending (largest = rank 1); 1 = ascending (smallest = rank 1)</p>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=RANK.EQ(A2, $A$2:$A$20, 0)</td><td class="result-cell">Rank from highest (1=highest)</td></tr>
+      <tr><td class="formula-cell">=RANK.EQ(A2, $A$2:$A$20, 1)</td><td class="result-cell">Rank from lowest (1=lowest)</td></tr>
+      <tr><td class="formula-cell">=RANK.AVG(85, {90,85,85,70}, 0)</td><td class="result-cell">2.5  (tied 2nd and 3rd, avg)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PERCENTILE / PERCENTRANK -->
+<div class="formula-card" id="f-percentile">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">05</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PERCENTILE.INC / PERCENTILE.EXC / PERCENTRANK <span class="formula-tag tag-math">Statistical</span></div>
+      <div class="formula-subtitle">Find percentile values or rank a value as a percentage</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=PERCENTILE.INC(array, k)    — k between 0 and 1, inclusive
+=PERCENTILE.EXC(array, k)    — k between 0 and 1, exclusive
+=PERCENTRANK.INC(array, x)   — what % of values is x greater than?
+=PERCENTRANK.EXC(array, x)   — exclusive version</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=PERCENTILE.INC(A1:A100, 0.9)</td><td>90th percentile value</td><td class="result-cell">Value at 90th pctile</td></tr>
+      <tr><td class="formula-cell">=PERCENTRANK.INC(A1:A100, 750)</td><td>Where does 750 rank?</td><td class="result-cell">e.g. 0.85 = top 85%</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> INC (inclusive) vs EXC (exclusive) differ in how they handle 0 and 1 boundaries. For most purposes, PERCENTILE.INC is the standard choice.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--          INFORMATION FUNCTIONS         -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-info">
+  <div class="cat-icon financial" style="background:linear-gradient(135deg,#1a2a1a,#34d399)">ℹ️</div>
+  <div class="cat-title">Information Functions</div>
+</div>
+
+<!-- IS functions -->
+<div class="formula-card" id="f-is-functions">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">IS Functions: ISBLANK, ISNUMBER, ISTEXT, ISERROR… <span class="formula-tag tag-logical">Info</span></div>
+      <div class="formula-subtitle">Test cell content type and return TRUE/FALSE</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <table class="ex-table">
+      <tr><th>Function</th><th>Returns TRUE when…</th><th>Example</th></tr>
+      <tr><td class="formula-cell">ISBLANK(A1)</td><td>Cell is empty</td><td class="result-cell">=IF(ISBLANK(A1),"Missing",A1)</td></tr>
+      <tr><td class="formula-cell">ISNUMBER(A1)</td><td>Cell contains a number</td><td class="result-cell">=ISNUMBER(VALUE(A1))</td></tr>
+      <tr><td class="formula-cell">ISTEXT(A1)</td><td>Cell contains text</td><td class="result-cell">=IF(ISTEXT(A1),"Text","Number")</td></tr>
+      <tr><td class="formula-cell">ISERROR(A1)</td><td>Cell has ANY error</td><td class="result-cell">=IF(ISERROR(A1),"—",A1)</td></tr>
+      <tr><td class="formula-cell">ISERR(A1)</td><td>Any error EXCEPT #N/A</td><td class="result-cell">Excludes lookup misses</td></tr>
+      <tr><td class="formula-cell">ISNA(A1)</td><td>Cell has #N/A error only</td><td class="result-cell">VLOOKUP miss check</td></tr>
+      <tr><td class="formula-cell">ISEVEN(A1)</td><td>Number is even</td><td class="result-cell">=IF(ISEVEN(ROW()),"Stripe","")</td></tr>
+      <tr><td class="formula-cell">ISODD(A1)</td><td>Number is odd</td><td class="result-cell">—</td></tr>
+      <tr><td class="formula-cell">ISLOGICAL(A1)</td><td>Cell contains TRUE/FALSE</td><td class="result-cell">—</td></tr>
+      <tr><td class="formula-cell">ISNONTEXT(A1)</td><td>Cell is NOT text (incl. blank)</td><td class="result-cell">—</td></tr>
+      <tr><td class="formula-cell">ISFORMULA(A1)</td><td>Cell contains a formula</td><td class="result-cell">Audit helper</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 IS + IF combo:</strong> =IF(ISBLANK(A1), "⚠️ Missing", A1) — visual alert for missing data. Great for data validation dashboards.</div>
+  </div>
+</div>
+
+<!-- CELL / SHEET / SHEETS -->
+<div class="formula-card" id="f-cell-sheet">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">02</span>
+    <div class="formula-title-area">
+      <div class="formula-name">CELL / SHEET / SHEETS <span class="formula-tag tag-logical">Info</span></div>
+      <div class="formula-subtitle">Return information about cells, sheets, or workbook structure</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=CELL(info_type, [reference])
+=SHEET([value])
+=SHEETS([reference])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=CELL("address", A1)</td><td class="result-cell">$A$1</td></tr>
+      <tr><td class="formula-cell">=CELL("filename", A1)</td><td class="result-cell">Full path + workbook + sheet name</td></tr>
+      <tr><td class="formula-cell">=CELL("format", A1)</td><td class="result-cell">Format code (e.g. "D1" for date)</td></tr>
+      <tr><td class="formula-cell">=SHEET()</td><td class="result-cell">Current sheet number</td></tr>
+      <tr><td class="formula-cell">=SHEETS()</td><td class="result-cell">Total sheets in workbook</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 Extract sheet name trick:</strong> =MID(CELL("filename",A1), FIND("]",CELL("filename",A1))+1, 100) — returns the current worksheet name as text.</div>
+  </div>
+</div>
+
+<!-- STOCKHISTORY -->
+<div class="formula-card" id="f-stockhistory">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">03</span>
+    <div class="formula-title-area">
+      <div class="formula-name">STOCKHISTORY <span class="formula-tag tag-logical">Info</span></div>
+      <div class="formula-subtitle">Retrieve historical stock price data — Microsoft 365</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="syntax-box">=STOCKHISTORY(stock, start_date, [end_date], [interval], [headers], [properties])</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=STOCKHISTORY("MSFT", "1/1/2024", TODAY())</td><td>Microsoft daily prices this year</td></tr>
+      <tr><td class="formula-cell">=STOCKHISTORY("RELIANCE.NS", DATE(2024,1,1), , 1)</td><td>Weekly data for Reliance</td></tr>
+    </table>
+    <div class="info-box"><strong>📌</strong> interval: 0=daily, 1=weekly, 2=monthly. properties: 0=date, 1=close, 2=open, 3=high, 4=low, 5=volume. Requires Microsoft 365 with internet access.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!--       COMPATIBILITY / LEGACY           -->
+<!-- ═══════════════════════════════════════ -->
+<div class="cat-header" id="sec-compat">
+  <div class="cat-icon text" style="background:linear-gradient(135deg,#2a1a1a,#ef4444)">🔁</div>
+  <div class="cat-title">Compatibility / Legacy Functions</div>
+</div>
+
+<div class="formula-card" id="f-compat">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">01</span>
+    <div class="formula-title-area">
+      <div class="formula-name">PERCENTILE / PERCENTRANK / RANK <span class="formula-tag tag-logical">Legacy</span></div>
+      <div class="formula-subtitle">Older versions replaced by newer .INC / .EQ / .AVG variants</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">These legacy functions still work in all Excel versions for backward compatibility, but Microsoft recommends using their modern replacements.</p>
+    <table class="ex-table">
+      <tr><th>Legacy Function</th><th>Modern Replacement</th><th>Notes</th></tr>
+      <tr><td class="formula-cell">=PERCENTILE(array, k)</td><td class="result-cell">=PERCENTILE.INC(array, k)</td><td>Same behavior</td></tr>
+      <tr><td class="formula-cell">=PERCENTRANK(array, x)</td><td class="result-cell">=PERCENTRANK.INC(array, x)</td><td>Same behavior</td></tr>
+      <tr><td class="formula-cell">=RANK(num, ref, order)</td><td class="result-cell">=RANK.EQ(num, ref, order)</td><td>Same top-rank tie behavior</td></tr>
+    </table>
+    <div class="warn-box"><strong>⚠️</strong> Legacy functions may not appear in IntelliSense in newer Excel versions. They work but consider migrating to modern equivalents for clarity and future-proofing.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--          EXCEL 365 EXCLUSIVE FEATURES                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ── 365 HERO BANNER ── -->
+<div style="background:linear-gradient(135deg,#0a1628 0%,#0d2137 50%,#0a1628 100%);border:1px solid #1e4d2b;border-radius:14px;padding:30px 36px;margin-bottom:32px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:0;right:0;width:300px;height:100%;background:radial-gradient(ellipse at right,rgba(16,185,129,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:#34d399;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">Microsoft 365 · Excel 365 · Exclusive Feature Reference</div>
+  <div style="font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:#e2e8f0;line-height:1.2;margin-bottom:10px;">Excel <span style="color:#34d399;">365</span> — Everything New &amp; Exclusive</div>
+  <p style="color:#94a3b8;font-size:0.9rem;max-width:620px;line-height:1.7;margin-bottom:20px;">
+    Microsoft 365 introduced a paradigm shift in Excel — <strong style="color:#e2e8f0;">Dynamic Arrays</strong>, 
+    <strong style="color:#e2e8f0;">LAMBDA</strong>, <strong style="color:#e2e8f0;">Power Query</strong>, 
+    <strong style="color:#e2e8f0;">Copilot</strong>, and dozens of new functions that simply don't exist 
+    in older versions. This section covers every 365-exclusive feature with complete examples.
+  </p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;">
+    <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;padding:10px 18px;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#34d399;">50+</div>
+      <div style="font-size:0.7rem;color:#64748b;margin-top:2px;">New Functions</div>
+    </div>
+    <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;padding:10px 18px;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#34d399;">∞</div>
+      <div style="font-size:0.7rem;color:#64748b;margin-top:2px;">Spill Range</div>
+    </div>
+    <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;padding:10px 18px;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#34d399;">AI</div>
+      <div style="font-size:0.7rem;color:#64748b;margin-top:2px;">Copilot Built-in</div>
+    </div>
+    <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:8px;padding:10px 18px;text-align:center;">
+      <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#34d399;">PQ</div>
+      <div style="font-size:0.7rem;color:#64748b;margin-top:2px;">Power Query</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DYNAMIC ARRAYS ── -->
+<div class="cat-header" id="sec-365-dynarray">
+  <div class="cat-icon excel365">⚡</div>
+  <div class="cat-title">Dynamic Arrays &amp; Spill — The 365 Revolution</div>
+</div>
+
+<div class="formula-card open" id="f-365-spill">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Dynamic Arrays &amp; Spill Behaviour <span class="formula-tag tag-365">365 Core</span></div>
+      <div class="formula-subtitle">How Excel 365 fundamentally changed formula results — arrays spill automatically</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Before Excel 365, a formula always returned exactly one value into one cell. Excel 365 introduced <strong>Dynamic Arrays</strong> — a single formula can now return multiple values that automatically <em>spill</em> into neighbouring cells. This single change makes dozens of previously complex tasks trivially simple.</p>
+
+    <div class="section-label">What Spilling Means</div>
+    <table class="ex-table">
+      <tr><th>Formula in A1</th><th>Pre-365 Behaviour</th><th>365 Behaviour</th></tr>
+      <tr><td class="formula-cell">=UNIQUE(C1:C100)</td><td>Error or single value</td><td class="result-cell">Spills 20+ unique values downward automatically</td></tr>
+      <tr><td class="formula-cell">=SORT(A1:A50)</td><td>Didn't exist</td><td class="result-cell">Spills 50 sorted values into A1:A50 (new location)</td></tr>
+      <tr><td class="formula-cell">={1,2,3,4,5}</td><td>Ctrl+Shift+Enter needed, fills only one cell</td><td class="result-cell">Spills 1 2 3 4 5 across 5 cells automatically</td></tr>
+      <tr><td class="formula-cell">=A1:A10*2</td><td>Error (range × number)</td><td class="result-cell">Spills 10 results — each value doubled</td></tr>
+    </table>
+
+    <div class="section-label">The Spill Range Operator — #</div>
+    <p class="desc">When a formula spills, the entire output is called the <strong>spill range</strong>. Reference it using the <code style="background:var(--code-bg);padding:1px 6px;border-radius:3px;color:var(--cyan);font-family:'DM Mono',monospace;">#</code> operator after the top-left cell.</p>
+    <div class="syntax-box">=A1#          — reference the entire spill range of the formula in A1
+=SORT(A1#)   — sort the spill range of A1's formula
+=SUM(A1#)    — sum all values in the spill range
+=COUNTA(A1#) — count items in the spill range</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>What It Does</th></tr>
+      <tr><td class="formula-cell">=UNIQUE(B2:B100)</td><td>Spills unique list into column — auto-sized</td></tr>
+      <tr><td class="formula-cell">=COUNTA(A2#)</td><td>Counts how many values spilled from A2's formula</td></tr>
+      <tr><td class="formula-cell">=VLOOKUP(E2#, A:C, 2, 0)</td><td>VLOOKUP for every value in E2's spill range at once</td></tr>
+      <tr><td class="formula-cell">=SORT(UNIQUE(B2:B100))</td><td>Sorted unique list — two functions, one spill</td></tr>
+    </table>
+
+    <div class="section-label">Spill Errors</div>
+    <table class="ex-table">
+      <tr><th>Error</th><th>Cause</th><th>Fix</th></tr>
+      <tr><td class="formula-cell">#SPILL!</td><td>Cells in spill range are not empty</td><td>Clear all cells in the expected spill area</td></tr>
+      <tr><td class="formula-cell">#CALC!</td><td>Formula produced an empty array</td><td>Check filter criteria or source data is not empty</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Game Changer:</strong> With dynamic arrays, you write ONE formula and the results fill themselves. No more copying formulas down 500 rows. Change the source data and the spill range resizes automatically.</div>
+  </div>
+</div>
+
+<!-- IMPLICIT INTERSECTION & @ -->
+<div class="formula-card" id="f-365-implicit">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Implicit Intersection &amp; the @ Operator <span class="formula-tag tag-365">365 Core</span></div>
+      <div class="formula-subtitle">How 365 handles legacy formulas in a dynamic array world</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">In older Excel, if you referenced an entire column (A:A) in a formula, Excel silently used <em>implicit intersection</em> — it automatically picked the value in the same row as the formula. In Excel 365, references to ranges would spill. The <strong>@ operator</strong> (Implicit Intersection Operator) restores the old single-value behaviour explicitly.</p>
+    <div class="syntax-box">=@A:A         — returns the value from column A in the SAME ROW (implicit intersection)
+=A:A          — in 365, would spill the entire column
+=@SORT(A:A)   — returns only the FIRST value from SORT's spill output
+=@UNIQUE(B:B) — returns only the first unique value</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Old Excel Behaviour</th><th>Excel 365 Behaviour</th></tr>
+      <tr><td class="formula-cell">=A:A</td><td>Implicit intersection (same row)</td><td class="result-cell">Spills entire column — use @A:A to match old behaviour</td></tr>
+      <tr><td class="formula-cell">=@A:A</td><td>Same as =A:A</td><td class="result-cell">Explicit: take value from same row only</td></tr>
+      <tr><td class="formula-cell">=VLOOKUP(A:A, ...)</td><td>Looked up same-row value</td><td class="result-cell">Now spills results for all rows — use @A:A inside if needed</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 When you open old workbooks in 365:</strong> Excel automatically adds @ to formulas that previously relied on implicit intersection. You may see =@VLOOKUP(...) — this is Excel preserving old single-value behaviour. It still works correctly.</div>
+  </div>
+</div>
+
+<!-- ── DA FUNCTIONS DEEP DIVE ── -->
+<div class="cat-header" id="sec-365-da-funcs">
+  <div class="cat-icon excel365">🔢</div>
+  <div class="cat-title">Dynamic Array Functions — Complete Deep Dive</div>
+</div>
+
+<div class="formula-card" id="f-365-drop">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">DROP <span class="formula-tag tag-365">365 Only</span></div>
+      <div class="formula-subtitle">Remove rows or columns from the start or end of an array</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">DROP is the complement of TAKE. While TAKE returns the first/last N rows or columns, DROP removes them — returning everything else. Negative numbers drop from the end.</p>
+    <div class="syntax-box pink">=DROP(array, rows, [cols])</div>
+    <div class="params">
+      <div class="param-row"><span class="param-name">array</span><span class="param-desc">The source array or range</span></div>
+      <div class="param-row"><span class="param-name">rows</span><span class="param-desc">Rows to drop from top (positive) or bottom (negative)</span></div>
+      <div class="param-row"><span class="param-name">cols</span><span class="param-desc">Optional. Columns to drop from left (positive) or right (negative)</span></div>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=DROP(A1:C10, 1)</td><td>Remove header row</td><td class="result-cell">Rows 2–10 of A:C</td></tr>
+      <tr><td class="formula-cell">=DROP(A1:C10, -1)</td><td>Remove last row</td><td class="result-cell">Rows 1–9 of A:C</td></tr>
+      <tr><td class="formula-cell">=DROP(A1:C10, 0, 1)</td><td>Remove first column</td><td class="result-cell">Columns B and C only</td></tr>
+      <tr><td class="formula-cell">=DROP(A1:C10, 1, 1)</td><td>Remove header row AND first column</td><td class="result-cell">Data-only without labels</td></tr>
+      <tr><td class="formula-cell">=DROP(A1:E1, 0, -1)</td><td>Remove last column from header</td><td class="result-cell">Columns A–D header</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Header removal pattern:</strong> =DROP(A1:D100, 1) removes the header row, leaving pure data — perfect for passing data-only arrays into SORT, FILTER, or UNIQUE without the column name row being included.</div>
+    <div class="tip-box"><strong>💡 TAKE + DROP combo:</strong> =TAKE(DROP(A:D, 1), 10) — skip header row, then take first 10 data rows. Stacks cleanly.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-isomitted">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">ISOMITTED <span class="formula-tag tag-365">365 Only</span></div>
+      <div class="formula-subtitle">Check if an optional LAMBDA parameter was not provided</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">ISOMITTED is used exclusively inside LAMBDA functions to test whether an optional parameter was provided by the caller. Returns TRUE if the parameter was omitted, FALSE if it was supplied. Essential for building LAMBDA functions with default values.</p>
+    <div class="syntax-box yellow">=ISOMITTED(argument)</div>
+    <div class="section-label">Usage Pattern — LAMBDA with Optional Parameters</div>
+    <div class="syntax-box yellow">/* Define in Name Manager as "TaxCalc": */
+=LAMBDA(amount, [rate],
+    LET(
+        r, IF(ISOMITTED(rate), 0.18, rate),
+        amount * r
+    )
+)
+
+/* Usage: */
+=TaxCalc(1000)        — uses default rate 18%  → 180
+=TaxCalc(1000, 0.05)  — uses provided rate 5%  → 50</div>
+    <table class="ex-table">
+      <tr><th>Scenario</th><th>ISOMITTED Returns</th><th>Result</th></tr>
+      <tr><td>=TaxCalc(1000)</td><td>TRUE (rate omitted)</td><td class="result-cell">Uses default 18% → 180</td></tr>
+      <tr><td>=TaxCalc(1000, 0.05)</td><td>FALSE (rate provided)</td><td class="result-cell">Uses 5% → 50</td></tr>
+    </table>
+    <div class="section-label">More ISOMITTED Patterns</div>
+    <div class="syntax-box yellow">/* LAMBDA with optional separator */
+=LAMBDA(text1, text2, [sep],
+    text1 & IF(ISOMITTED(sep), " ", sep) & text2
+)
+/* Named "JoinText": */
+=JoinText("Hello","World")       → "Hello World"
+=JoinText("Hello","World",", ")  → "Hello, World"</div>
+    <div class="info-box"><strong>📌 Key Rule:</strong> ISOMITTED only works on parameters declared with square brackets [ ] inside LAMBDA — those are optional parameters. Required parameters cannot be omitted and ISOMITTED would always return FALSE for them.</div>
+  </div>
+</div>
+
+<!-- ── LINKED DATA TYPES ── -->
+<div class="cat-header" id="sec-365-linked">
+  <div class="cat-icon excel365">🌐</div>
+  <div class="cat-title">Linked Data Types — STOCKS, GEOGRAPHY &amp; FIELDVALUE</div>
+</div>
+
+<div class="formula-card" id="f-365-stocks-geo">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">STOCKS &amp; GEOGRAPHY Data Types <span class="formula-tag tag-365">365 Only</span></div>
+      <div class="formula-subtitle">Convert cell text to live-updating rich data objects from the web</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Excel 365 can convert plain text like "MSFT" or "India" into rich <strong>Linked Data Types</strong> — objects that pull live data from Microsoft's data services. The cell shows a small icon indicating it's a data type, not just text. Requires internet connection and Microsoft 365 subscription.</p>
+    <div class="section-label">How to Convert Text to a Data Type</div>
+    <table class="ex-table">
+      <tr><th>Step</th><th>Action</th></tr>
+      <tr><td>1</td><td>Type a stock ticker (e.g. RELIANCE) or company name in a cell</td></tr>
+      <tr><td>2</td><td>Select the cell(s) → Data tab → Data Types → Stocks (or Geography)</td></tr>
+      <tr><td>3</td><td>Excel connects to the web and converts the text to a linked data object</td></tr>
+      <tr><td>4</td><td>A small icon appears — click it to see all available fields</td></tr>
+    </table>
+    <div class="section-label">Extracting Fields with the . Operator</div>
+    <div class="syntax-box">=A1.Price           — current stock price
+=A1.Change          — price change today
+=A1.[52 week high]  — 52-week high (use [] for multi-word fields)
+=A1.Volume          — trading volume
+=A1.Market cap      — market capitalisation</div>
+    <table class="ex-table">
+      <tr><th>Cell A1 = "MSFT" (Stocks type)</th><th>Formula</th><th>Result</th></tr>
+      <tr><td>Microsoft Corporation</td><td class="formula-cell">=A1.Price</td><td class="result-cell">Live current price</td></tr>
+      <tr><td>Microsoft Corporation</td><td class="formula-cell">=A1.Name</td><td class="result-cell">Microsoft Corporation</td></tr>
+      <tr><td>Microsoft Corporation</td><td class="formula-cell">=A1.[P/E ratio]</td><td class="result-cell">Price-to-earnings ratio</td></tr>
+    </table>
+    <table class="ex-table" style="margin-top:8px">
+      <tr><th>Cell A1 = "India" (Geography type)</th><th>Formula</th><th>Result</th></tr>
+      <tr><td>India</td><td class="formula-cell">=A1.Population</td><td class="result-cell">~1.4 billion</td></tr>
+      <tr><td>India</td><td class="formula-cell">=A1.Capital</td><td class="result-cell">New Delhi</td></tr>
+      <tr><td>India</td><td class="formula-cell">=A1.Area</td><td class="result-cell">3,287,263 km²</td></tr>
+      <tr><td>India</td><td class="formula-cell">=A1.GDP</td><td class="result-cell">GDP value</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-fieldvalue">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">FIELDVALUE <span class="formula-tag tag-365">365 Only</span></div>
+      <div class="formula-subtitle">Extract a field from a Linked Data Type using a formula (not . operator)</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">FIELDVALUE extracts a named field from a Linked Data Type cell using a formula approach. Unlike the dot (.) operator, FIELDVALUE lets you supply the field name as a string — making it dynamic and formula-driven.</p>
+    <div class="syntax-box">=FIELDVALUE(value, field_name)</div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th><th>Result</th></tr>
+      <tr><td class="formula-cell">=FIELDVALUE(A1, "Price")</td><td>Stock price from data type in A1</td><td class="result-cell">Live price</td></tr>
+      <tr><td class="formula-cell">=FIELDVALUE(A1, "Market cap")</td><td>Market cap</td><td class="result-cell">Cap value</td></tr>
+      <tr><td class="formula-cell">=FIELDVALUE(A1, B1)</td><td>Dynamic field — B1 contains field name text</td><td class="result-cell">Changes with B1</td></tr>
+      <tr><td class="formula-cell">=IFERROR(FIELDVALUE(A1,"Price"),"N/A")</td><td>Safe extraction</td><td class="result-cell">N/A if field unavailable</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 FIELDVALUE vs . operator:</strong> Use <code style="color:var(--cyan);">=A1.Price</code> for a fixed, quick field lookup. Use <code style="color:var(--cyan);">=FIELDVALUE(A1, B1)</code> when the field name itself should be dynamic or user-selectable.</div>
+  </div>
+</div>
+
+<!-- ── POWER QUERY ── -->
+<div class="cat-header" id="sec-365-powerquery">
+  <div class="cat-icon powerq">⚙️</div>
+  <div class="cat-title">Power Query — Get &amp; Transform Data</div>
+</div>
+
+<div class="formula-card open" id="f-365-pq-intro">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Power Query — Introduction &amp; Core Concepts <span class="formula-tag tag-pq">Power Query</span></div>
+      <div class="formula-subtitle">Import, transform and combine data from any source — without formulas</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Power Query (also called <strong>Get &amp; Transform Data</strong>) is a built-in ETL (Extract, Transform, Load) engine in Excel 365. It lets you connect to virtually any data source, clean and reshape data visually with clicks — then automatically refresh when source data changes. Every step is recorded and repeatable.</p>
+    <div class="section-label">Accessing Power Query</div>
+    <div class="shortcuts">
+      <span class="kbd">Data</span><span class="kbd-label">→</span>
+      <span class="kbd">Get Data</span><span class="kbd-label">→ choose source</span>
+    </div>
+    <div class="section-label">Data Sources Power Query Can Connect To</div>
+    <table class="ex-table">
+      <tr><th>Category</th><th>Sources</th></tr>
+      <tr><td><strong>Files</strong></td><td>Excel workbook, CSV/Text, JSON, XML, PDF, Folder (combine all files in a folder)</td></tr>
+      <tr><td><strong>Databases</strong></td><td>SQL Server, MySQL, PostgreSQL, Oracle, Access, Azure SQL</td></tr>
+      <tr><td><strong>Cloud</strong></td><td>SharePoint, OneDrive, Azure Blob Storage, Dataverse</td></tr>
+      <tr><td><strong>Services</strong></td><td>OData feed, Web page (HTML table scraping), REST API</td></tr>
+      <tr><td><strong>Other</strong></td><td>Power BI datasets, Python/R scripts as data sources</td></tr>
+    </table>
+    <div class="section-label">Key Power Query Transformations</div>
+    <table class="ex-table">
+      <tr><th>Transformation</th><th>What It Does</th><th>Location in UI</th></tr>
+      <tr><td><strong>Remove Columns</strong></td><td>Delete columns you don't need</td><td>Right-click column header</td></tr>
+      <tr><td><strong>Remove Duplicates</strong></td><td>Keep unique rows only</td><td>Right-click → Remove Duplicates</td></tr>
+      <tr><td><strong>Filter Rows</strong></td><td>Keep/remove rows by value, condition</td><td>Column header dropdown</td></tr>
+      <tr><td><strong>Split Column</strong></td><td>Split by delimiter or position</td><td>Transform → Split Column</td></tr>
+      <tr><td><strong>Merge Columns</strong></td><td>Combine two columns with separator</td><td>Transform → Merge Columns</td></tr>
+      <tr><td><strong>Pivot / Unpivot</strong></td><td>Reshape wide→long or long→wide</td><td>Transform → Pivot/Unpivot Columns</td></tr>
+      <tr><td><strong>Group By</strong></td><td>Aggregate rows by category</td><td>Transform → Group By</td></tr>
+      <tr><td><strong>Merge Queries</strong></td><td>JOIN two tables (like VLOOKUP but better)</td><td>Home → Merge Queries</td></tr>
+      <tr><td><strong>Append Queries</strong></td><td>Stack tables vertically (UNION)</td><td>Home → Append Queries</td></tr>
+      <tr><td><strong>Add Custom Column</strong></td><td>Calculate new column using M formula language</td><td>Add Column → Custom Column</td></tr>
+      <tr><td><strong>Change Data Type</strong></td><td>Set correct type: text, number, date, boolean</td><td>Column header icon or Transform</td></tr>
+      <tr><td><strong>Replace Values</strong></td><td>Find and replace cell values</td><td>Right-click → Replace Values</td></tr>
+    </table>
+    <div class="section-label">Power Query M Language — Basics</div>
+    <p class="desc">Behind every Power Query transformation is <strong>M language</strong> code (View → Advanced Editor). You don't need to write it — clicks generate it — but reading it helps you understand and debug.</p>
+    <div class="syntax-box">=Table.FilterRows(Source, each [Region] = "Delhi")
+=Table.SelectColumns(Source, {"Name", "Sales", "Date"})
+=Table.RenameColumns(Source, {{"OldName", "NewName"}})
+=Table.TransformColumnTypes(Source, {{"Date", type date}})
+=Table.Group(Source, {"Region"}, {{"TotalSales", each List.Sum([Sales]), type number}})</div>
+    <div class="tip-box"><strong>💡 The Killer Feature — Refresh:</strong> Once you set up a Power Query, click <strong>Data → Refresh All</strong> (or Ctrl+Alt+F5) to re-run every transformation step with the latest source data. Monthly reports that took 2 hours now take 2 seconds.</div>
+    <div class="warn-box"><strong>⚠️ Power Query vs Formulas:</strong> Power Query transforms data at load time — results are a static table until refreshed. Excel formulas compute live. Use Power Query for cleaning/combining data; use formulas for calculations on the cleaned data.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-pq-advanced">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Power Query — Advanced Techniques <span class="formula-tag tag-pq">Power Query</span></div>
+      <div class="formula-subtitle">Combine files, unpivot, parameters, and custom functions</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <div class="section-label">Combine All Files in a Folder</div>
+    <p class="desc">One of Power Query's most powerful features — automatically combine every Excel or CSV file in a folder into a single table.</p>
+    <div class="syntax-box">Data → Get Data → From File → From Folder → select folder
+→ Combine → Combine & Transform Data
+→ Power Query handles the rest automatically</div>
+    <div class="tip-box"><strong>💡 Monthly Report Automation:</strong> Drop each month's export into one folder. One click Refresh and all months are combined and cleaned. Works for 1 file or 1,000 files identically.</div>
+
+    <div class="section-label">Unpivot — Converting Wide Data to Long Format</div>
+    <table class="ex-table">
+      <tr><th colspan="4">Wide Format (before unpivot)</th></tr>
+      <tr><td><strong>Name</strong></td><td><strong>Jan</strong></td><td><strong>Feb</strong></td><td><strong>Mar</strong></td></tr>
+      <tr><td>Alice</td><td>5000</td><td>6000</td><td>5500</td></tr>
+    </table>
+    <table class="ex-table" style="margin-top:6px">
+      <tr><th colspan="3">Long Format (after unpivot — better for Pivot Tables)</th></tr>
+      <tr><td><strong>Name</strong></td><td><strong>Month</strong></td><td><strong>Sales</strong></td></tr>
+      <tr><td>Alice</td><td>Jan</td><td>5000</td></tr>
+      <tr><td>Alice</td><td>Feb</td><td>6000</td></tr>
+      <tr><td>Alice</td><td>Mar</td><td>5500</td></tr>
+    </table>
+    <p class="desc" style="margin-top:8px">To unpivot: select the identifier column (Name) → right-click → Unpivot Other Columns. Power Query reshapes the entire table instantly.</p>
+
+    <div class="section-label">Query Parameters</div>
+    <p class="desc">Create parameters (Home → Manage Parameters) to make your queries dynamic — e.g., a date range filter where you change the Start Date parameter and refresh, rather than editing the query each time.</p>
+
+    <div class="section-label">Merge Queries — The VLOOKUP Replacement</div>
+    <div class="syntax-box">Home → Merge Queries
+→ Select primary table and secondary table
+→ Choose matching columns (like lookup_value and lookup_range)
+→ Choose join type: Left Outer (like VLOOKUP), Inner, Full Outer, Anti-join
+→ Expand the merged column to bring in desired fields</div>
+    <div class="info-box"><strong>📌 Merge vs VLOOKUP:</strong> Power Query Merge handles millions of rows instantly, supports multiple join conditions, joins on any column (not just first), and handles many-to-many relationships. VLOOKUP struggles beyond ~100k rows and can only return one column at a time.</div>
+  </div>
+</div>
+
+<!-- ── POWER PIVOT ── -->
+<div class="cat-header" id="sec-365-powerpivot">
+  <div class="cat-icon powerq">🗃️</div>
+  <div class="cat-title">Power Pivot — Data Modelling &amp; DAX</div>
+</div>
+
+<div class="formula-card" id="f-365-powerpivot">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Power Pivot &amp; the Data Model <span class="formula-tag tag-pq">Power Pivot</span></div>
+      <div class="formula-subtitle">Relate multiple tables and write DAX measures for advanced analysis</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Power Pivot is an in-memory analytical engine built into Excel 365. It allows you to create a <strong>Data Model</strong> — multiple related tables connected by relationships (like a database). Pivot Tables built on the Data Model can analyse tens of millions of rows instantly and use DAX (Data Analysis Expressions) for complex calculations impossible in regular Pivot Tables.</p>
+    <div class="section-label">Enabling Power Pivot</div>
+    <div class="shortcuts"><span class="kbd">File</span><span class="kbd-label">→</span><span class="kbd">Options</span><span class="kbd-label">→</span><span class="kbd">Add-ins</span><span class="kbd-label">→ COM Add-ins → Microsoft Power Pivot for Excel</span></div>
+    <div class="section-label">Data Model — Key Concepts</div>
+    <table class="ex-table">
+      <tr><th>Concept</th><th>Explanation</th></tr>
+      <tr><td><strong>Fact Table</strong></td><td>The main table with transactions/measurements (e.g. Sales table with one row per sale)</td></tr>
+      <tr><td><strong>Dimension Table</strong></td><td>Lookup tables providing context (e.g. Products, Customers, Dates, Regions)</td></tr>
+      <tr><td><strong>Relationship</strong></td><td>Link between tables on a common key (like a foreign key in databases)</td></tr>
+      <tr><td><strong>Star Schema</strong></td><td>Best practice: one fact table in the centre, dimension tables surrounding it</td></tr>
+      <tr><td><strong>Measure</strong></td><td>A calculated value defined in DAX — more powerful than calculated fields</td></tr>
+    </table>
+    <div class="section-label">DAX — Data Analysis Expressions (Basics)</div>
+    <p class="desc">DAX is the formula language of Power Pivot. It looks similar to Excel formulas but operates on entire tables and columns.</p>
+    <div class="syntax-box">/* Basic Measures (written in Power Pivot window) */
+Total Sales     = SUM(Sales[Amount])
+Avg Order Value = AVERAGE(Sales[Amount])
+Order Count     = COUNTROWS(Sales)
+Profit Margin   = DIVIDE([Total Sales]-[Total Cost], [Total Sales])
+
+/* Context-aware measures */
+Sales YTD       = TOTALYTD(SUM(Sales[Amount]), Dates[Date])
+Sales LY        = CALCULATE([Total Sales], SAMEPERIODLASTYEAR(Dates[Date]))
+YoY Growth      = DIVIDE([Total Sales]-[Sales LY], [Sales LY])
+
+/* CALCULATE — the most powerful DAX function */
+Delhi Sales     = CALCULATE([Total Sales], Regions[City]="Delhi")
+Top Products    = CALCULATE([Total Sales], TOPN(10, Products, [Total Sales]))</div>
+    <div class="tip-box"><strong>💡 Power Pivot vs Regular Pivot:</strong><br>
+    Regular Pivot: one table, up to ~1M rows, calculated fields only<br>
+    Power Pivot: multiple related tables, tens of millions of rows, full DAX measures, time intelligence functions</div>
+    <div class="section-label">Creating a Relationship</div>
+    <div class="syntax-box">Power Pivot window → Diagram View
+→ Drag Sales[ProductID] onto Products[ProductID]
+→ Relationship created — now Pivot Tables from this model can
+   filter Sales data by any column in Products automatically</div>
+  </div>
+</div>
+
+<!-- ── COPILOT ── -->
+<div class="cat-header" id="sec-365-copilot">
+  <div class="cat-icon copilot">🤖</div>
+  <div class="cat-title">Copilot in Excel — AI-Powered Assistance</div>
+</div>
+
+<div class="formula-card" id="f-365-copilot">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Copilot in Excel <span class="formula-tag tag-new">AI Feature</span></div>
+      <div class="formula-subtitle">Microsoft 365 Copilot — AI assistant that writes formulas, creates charts and analyses data</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Microsoft 365 Copilot (available in eligible M365 subscriptions) is an AI assistant powered by GPT-4 integrated directly into Excel. It can write formulas, explain existing formulas, generate charts, create Pivot Tables, highlight patterns, and answer questions about your data — all in plain language.</p>
+    <div class="section-label">How to Access Copilot</div>
+    <div class="shortcuts">
+      <span class="kbd">Home tab</span><span class="kbd-label">→</span><span class="kbd">Copilot button</span><span class="kbd-label">(right side of ribbon) — or press</span><span class="kbd">Alt+I</span>
+    </div>
+    <div class="info-box"><strong>📌 Requirement:</strong> Copilot requires a Microsoft 365 Copilot licence (separate from standard M365), data must be in an Excel Table (Ctrl+T), and internet connection is required.</div>
+    <div class="section-label">What Copilot Can Do in Excel</div>
+    <table class="ex-table">
+      <tr><th>Capability</th><th>Example Prompt</th><th>Copilot Output</th></tr>
+      <tr><td><strong>Write Formulas</strong></td><td>"Add a column that calculates the profit margin"</td><td class="result-cell">Inserts =([@Revenue]-[@Cost])/[@Revenue] with label</td></tr>
+      <tr><td><strong>Explain Formulas</strong></td><td>"Explain what this formula does: =XLOOKUP(A2,E:E,F:F)"</td><td class="result-cell">Plain-English step-by-step explanation</td></tr>
+      <tr><td><strong>Create Charts</strong></td><td>"Create a chart showing sales by region over time"</td><td class="result-cell">Inserts an appropriate combo chart automatically</td></tr>
+      <tr><td><strong>Pivot Tables</strong></td><td>"Summarise total sales by product category and quarter"</td><td class="result-cell">Creates a fully configured Pivot Table</td></tr>
+      <tr><td><strong>Conditional Formatting</strong></td><td>"Highlight cells where sales dropped compared to last month"</td><td class="result-cell">Applies formula-based conditional formatting</td></tr>
+      <tr><td><strong>Data Insights</strong></td><td>"What are the top 3 trends in this data?"</td><td class="result-cell">Narrative analysis with supporting charts</td></tr>
+      <tr><td><strong>Sort &amp; Filter</strong></td><td>"Show me only rows where region is North and sales > 50000"</td><td class="result-cell">Applies filter automatically</td></tr>
+      <tr><td><strong>Clean Data</strong></td><td>"Remove duplicate rows based on customer ID"</td><td class="result-cell">Removes duplicates and reports count removed</td></tr>
+    </table>
+    <div class="section-label">Effective Copilot Prompting Tips</div>
+    <table class="ex-table">
+      <tr><th>Instead of…</th><th>Say…</th></tr>
+      <tr><td>"Write a formula"</td><td>"Add a column called 'Tax' that multiplies Revenue by 18%"</td></tr>
+      <tr><td>"Make a chart"</td><td>"Create a line chart comparing monthly sales for each region, with the legend at the bottom"</td></tr>
+      <tr><td>"Analyse data"</td><td>"Which sales rep has the highest average deal size and what months did they peak?"</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Best Practice:</strong> Always format your data as a Table (Ctrl+T) before using Copilot. Copilot works best with structured tables that have clear column headers.</div>
+    <div class="warn-box"><strong>⚠️ Always verify Copilot formulas:</strong> Copilot can make mistakes, especially with complex logic. Always check the formula it writes before relying on it for important decisions.</div>
+  </div>
+</div>
+
+<!-- ── NEW 365 UI & FEATURES ── -->
+<div class="cat-header" id="sec-365-newfeatures">
+  <div class="cat-icon excel365">🆕</div>
+  <div class="cat-title">New Excel 365 UI Features &amp; Tools</div>
+</div>
+
+<div class="formula-card" id="f-365-ideas">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Analyze Data (formerly Ideas) <span class="formula-tag tag-365">365 Only</span></div>
+      <div class="formula-subtitle">AI-powered automatic data analysis and chart suggestions</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc"><strong>Analyze Data</strong> (Home tab → Analyze Data) uses AI to automatically detect patterns, outliers, and trends in your data. It shows a panel of pre-built visual insights — charts, Pivot Table summaries, and natural language observations — with one click.</p>
+    <div class="section-label">What Analyze Data Provides</div>
+    <table class="ex-table">
+      <tr><th>Insight Type</th><th>Example</th></tr>
+      <tr><td><strong>Distribution</strong></td><td>Bar chart showing count per category</td></tr>
+      <tr><td><strong>Outliers</strong></td><td>"Product X has unusually high returns compared to average"</td></tr>
+      <tr><td><strong>Trend</strong></td><td>Line chart showing sales rising 12% month-over-month</td></tr>
+      <tr><td><strong>Correlation</strong></td><td>Scatter plot showing relationship between ad spend and sales</td></tr>
+      <tr><td><strong>Ranking</strong></td><td>Top 5 products by revenue this quarter</td></tr>
+    </table>
+    <div class="section-label">How to Use</div>
+    <div class="shortcuts">
+      <span class="kbd">Click any cell in your table</span>
+      <span class="kbd-label">→</span>
+      <span class="kbd">Home</span>
+      <span class="kbd-label">→</span>
+      <span class="kbd">Analyze Data</span>
+      <span class="kbd-label">→ Browse insights panel → click to insert chart or Pivot Table</span>
+    </div>
+    <div class="tip-box"><strong>💡</strong> You can also type a question in natural language in the Analyze Data search box: "What month had the highest sales?" — Excel uses AI to answer with a chart or table.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-datapicture">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Insert Data from Picture <span class="formula-tag tag-365">365 Mobile / Desktop</span></div>
+      <div class="formula-subtitle">Convert a photo of a table into Excel data using AI-powered OCR</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Excel 365 (mobile app and desktop with camera) can photograph a printed table, whiteboard data, or screenshot and automatically convert it into editable spreadsheet data using AI-powered optical character recognition (OCR).</p>
+    <div class="section-label">How to Use — Mobile App</div>
+    <table class="ex-table">
+      <tr><th>Step</th><th>Action</th></tr>
+      <tr><td>1</td><td>Open Excel mobile app → tap Insert → Data from Picture</td></tr>
+      <tr><td>2</td><td>Point camera at a printed table or take a photo from gallery</td></tr>
+      <tr><td>3</td><td>AI extracts all rows and columns, shows a preview</td></tr>
+      <tr><td>4</td><td>Review and correct any OCR errors → tap Insert</td></tr>
+      <tr><td>5</td><td>Data appears in your spreadsheet as editable cells</td></tr>
+    </table>
+    <div class="section-label">How to Use — Desktop</div>
+    <div class="syntax-box">Data tab → Get Data → From Picture → From File
+→ Select an image file (JPG, PNG) containing a table
+→ Excel extracts and previews the data
+→ Review corrections → Insert Data</div>
+    <div class="tip-box"><strong>💡 Best Use Cases:</strong> Digitising printed invoices, converting scanned reports to Excel, importing data from physical forms, or quickly capturing whiteboard data from a meeting photo.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-checkboxes">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Native Checkboxes <span class="formula-tag tag-new">New 2024</span></div>
+      <div class="formula-subtitle">True checkbox cells — insert, check/uncheck, use in formulas</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Excel 365 introduced native checkbox cells in 2024. Unlike the old Form Controls checkbox, these are directly inside cells and return TRUE/FALSE — no VBA or complex setup needed.</p>
+    <div class="section-label">Inserting Checkboxes</div>
+    <div class="shortcuts">
+      <span class="kbd">Select cells</span><span class="kbd-label">→</span>
+      <span class="kbd">Insert tab</span><span class="kbd-label">→</span>
+      <span class="kbd">Checkbox</span>
+    </div>
+    <table class="ex-table">
+      <tr><th>Formula</th><th>Description</th></tr>
+      <tr><td class="formula-cell">=COUNTIF(A1:A20, TRUE)</td><td>Count checked checkboxes</td></tr>
+      <tr><td class="formula-cell">=IF(A1, "Done", "Pending")</td><td>Status text based on checkbox</td></tr>
+      <tr><td class="formula-cell">=FILTER(B:C, A:A=TRUE)</td><td>Show only rows where checkbox is checked</td></tr>
+      <tr><td class="formula-cell">=SUMIF(A:A, TRUE, B:B)</td><td>Sum values only for checked rows</td></tr>
+    </table>
+    <div class="tip-box"><strong>💡 Task Tracker:</strong> Column A = checkboxes, Column B = task names, Column C = due dates. =FILTER(B:C, A:A=FALSE) shows all incomplete tasks automatically.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-python">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Python in Excel <span class="formula-tag tag-new">Preview 2024+</span></div>
+      <div class="formula-subtitle">Run Python code directly inside Excel cells</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <p class="desc">Microsoft introduced Python in Excel in 2024 (rolling out to Microsoft 365 subscribers). Python code runs securely in the cloud via Anaconda, and results — including charts, DataFrames, and calculated values — flow directly into your spreadsheet.</p>
+    <div class="section-label">How It Works</div>
+    <div class="syntax-box">/* In a cell, type:  =PY(  then press Ctrl+Shift+Enter to enter Python mode */
+
+import pandas as pd
+xl("A1:D100", headers=True)   # Reference Excel range as a DataFrame</div>
+    <table class="ex-table">
+      <tr><th>Python Cell Formula</th><th>What It Does</th></tr>
+      <tr><td class="formula-cell">=PY("import pandas as pd\ndf = xl('A1:D100', headers=True)\ndf.describe()")</td><td>Statistical summary of Excel data</td></tr>
+      <tr><td class="formula-cell">=PY("import matplotlib.pyplot as plt\n...")</td><td>Generate a matplotlib chart in Excel</td></tr>
+      <tr><td class="formula-cell">=PY("from sklearn.linear_model import LinearRegression\n...")</td><td>Machine learning models inside Excel</td></tr>
+    </table>
+    <div class="info-box"><strong>📌 Availability:</strong> Python in Excel requires Microsoft 365 Business/Enterprise subscription. The Python runtime runs in Azure cloud — not locally on your machine. No Python installation needed.</div>
+  </div>
+</div>
+
+<div class="formula-card" id="f-365-misc">
+  <div class="formula-header" onclick="toggle(this.parentElement)">
+    <span class="formula-num">✦</span>
+    <div class="formula-title-area">
+      <div class="formula-name">Other Excel 365 UI Enhancements <span class="formula-tag tag-365">365</span></div>
+      <div class="formula-subtitle">Co-authoring, version history, rich comments, sheet view and more</div>
+    </div><span class="formula-toggle">▼</span>
+  </div>
+  <div class="formula-body">
+    <table class="ex-table">
+      <tr><th>Feature</th><th>Description</th><th>Access</th></tr>
+      <tr><td><strong>Real-time Co-authoring</strong></td><td>Multiple users edit the same file simultaneously — see each other's cursors with names</td><td>Save to OneDrive → Share → multiple users open</td></tr>
+      <tr><td><strong>Version History</strong></td><td>See every auto-saved version of a cloud file, restore any previous version</td><td>File → Info → Version History</td></tr>
+      <tr><td><strong>Threaded Comments</strong></td><td>@mention teammates in comments, reply in threads, resolve discussions</td><td>Review → New Comment (or Ctrl+Alt+M)</td></tr>
+      <tr><td><strong>Notes vs Comments</strong></td><td>Old-style red-triangle notes (Shift+F2) are separate from new threaded comments</td><td>Review → Notes vs Review → Comments</td></tr>
+      <tr><td><strong>Sheet View</strong></td><td>Apply personal filter/sort without disturbing other co-authors' views</td><td>View → Sheet View → New</td></tr>
+      <tr><td><strong>Show Changes</strong></td><td>See a list of all recent edits — who changed what, when</td><td>Review → Show Changes</td></tr>
+      <tr><td><strong>Accessibility Checker</strong></td><td>Identify and fix accessibility issues for screen readers</td><td>Review → Check Accessibility</td></tr>
+      <tr><td><strong>Smart Lookup</strong></td><td>Right-click any cell → Smart Lookup to search the web for the value</td><td>Right-click → Smart Lookup</td></tr>
+      <tr><td><strong>Ideas / Insights</strong></td><td>Natural language data analysis (see Analyze Data above)</td><td>Home → Analyze Data</td></tr>
+      <tr><td><strong>Advanced Formula Bar</strong></td><td>Formula bar now shows multiline formulas with colour coding for nested functions</td><td>Automatic in 365</td></tr>
+      <tr><td><strong>AutoComplete for Functions</strong></td><td>Improved IntelliSense — shows parameter hints and descriptions as you type</td><td>Automatic</td></tr>
+      <tr><td><strong>Name Box Improvements</strong></td><td>Easier named range creation and management</td><td>Formulas → Name Manager (Ctrl+F3)</td></tr>
+      <tr><td><strong>Improved Pivot Table</strong></td><td>Automatic detection of relationships, improved default layouts, multi-select slicers</td><td>Insert → PivotTable</td></tr>
+      <tr><td><strong>LET function in CF</strong></td><td>Use LET inside Conditional Formatting formulas for complex multi-step rules</td><td>Conditional Formatting → New Rule → Formula</td></tr>
+    </table>
+    <div class="section-label">365 vs Older Excel — Quick Compatibility Reference</div>
+    <table class="ex-table">
+      <tr><th>Feature</th><th>Excel 2016/2019</th><th>Excel 365</th></tr>
+      <tr><td>XLOOKUP</td><td>❌ Not available</td><td class="result-cell">✅ Full support</td></tr>
+      <tr><td>FILTER, SORT, UNIQUE</td><td>❌ Not available</td><td class="result-cell">✅ Dynamic arrays</td></tr>
+      <tr><td>LAMBDA, LET</td><td>❌ Not available</td><td class="result-cell">✅ Full support</td></tr>
+      <tr><td>TEXTSPLIT, TEXTBEFORE/AFTER</td><td>❌ Not available</td><td class="result-cell">✅ Full support</td></tr>
+      <tr><td>Dynamic array spilling</td><td>❌ Returns single value</td><td class="result-cell">✅ Auto-spills</td></tr>
+      <tr><td>Checkboxes</td><td>❌ Only Form Controls</td><td class="result-cell">✅ Native cell checkboxes</td></tr>
+      <tr><td>Copilot / AI</td><td>❌ Not available</td><td class="result-cell">✅ With M365 Copilot licence</td></tr>
+      <tr><td>Python in Excel</td><td>❌ Not available</td><td class="result-cell">✅ Preview rollout 2024</td></tr>
+      <tr><td>Linked Data Types (Stocks/Geo)</td><td>❌ Not available</td><td class="result-cell">✅ Full support</td></tr>
+      <tr><td>Real-time co-authoring</td><td>⚠️ Limited</td><td class="result-cell">✅ Full real-time</td></tr>
+      <tr><td>Power Query</td><td>✅ Available</td><td class="result-cell">✅ Enhanced</td></tr>
+      <tr><td>Power Pivot</td><td>✅ Available (add-in)</td><td class="result-cell">✅ Enhanced</td></tr>
+    </table>
   </div>
 </div>
 
@@ -2445,7 +4347,7 @@ body {
 <!-- Back to Top -->
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── TOGGLE FORMULA CARDS ──
 function toggle(card) {
   card.classList.toggle('open');
@@ -2500,7 +4402,11 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '-40% 0px -50% 0px' });
 
-['sec-math','sec-text','sec-datetime','sec-logical','sec-lookup','sec-financial','sec-excel']
+['sec-math','sec-text','sec-datetime','sec-logical','sec-lookup','sec-financial',
+ 'sec-statistical','sec-info','sec-compat',
+ 'sec-365-dynarray','sec-365-da-funcs','sec-365-implicit','sec-365-linked',
+ 'sec-365-powerquery','sec-365-powerpivot','sec-365-copilot','sec-365-newfeatures',
+ 'sec-excel','sec-shortcuts']
   .forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
 </script>
 </body>
