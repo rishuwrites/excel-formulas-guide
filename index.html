@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Microsoft Excel — Complete Formula & Feature Reference</title>
+
+<meta name="description" content="A polished, searchable Excel formulas and features guide with examples, shortcuts, comparisons, and Excel 365 tools.">
+<meta name="theme-color" content="#0a0e1a">
+<meta property="og:title" content="Microsoft Excel — Complete Formula & Feature Reference">
+<meta property="og:description" content="A searchable Excel learning hub with formula examples, shortcuts, and advanced 365 features.">
+<meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -264,6 +270,31 @@ body {
 /* ── DESCRIPTION ── */
 .desc { color: var(--text2); font-size: 0.88rem; margin-bottom: 10px; }
 
+/* ── LEARNING FLOW / PROBLEM BOX ── */
+.learning-flow {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  margin: 18px 0 10px;
+}
+.flow-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
+}
+.flow-step {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 1.2px;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 8px;
+}
+.flow-card strong { display: block; font-family: 'Syne', sans-serif; font-size: 0.98rem; margin-bottom: 6px; }
+.flow-card p { color: var(--text2); font-size: 0.84rem; line-height: 1.55; }
+.problem-box {
+  background: rgba(236,72,153,0.07); border: 1px solid rgba(236,72,153,0.2);
+  border-radius: 10px; padding: 12px 16px; margin: 12px 0 14px;
+}
+.problem-label {
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 1.2px;
+  text-transform: uppercase; color: #f9a8d4; margin-bottom: 6px;
+}
+.problem-text { color: #fbcfe8; font-size: 0.86rem; line-height: 1.6; }
+
 /* ── SHORTCUT PILL ── */
 .shortcuts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
 .kbd {
@@ -370,6 +401,155 @@ body {
   .hero h1 { font-size: 1.7rem; }
   .search-bar { display: none; }
 }
+/* ── IMPROVEMENTS ── */
+body { scroll-padding-top: 84px; }
+
+.site-header .header-actions {
+  display: flex; align-items: center; gap: 10px;
+}
+.icon-btn, .toggle-all-btn {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.icon-btn:hover, .toggle-all-btn:hover { transform: translateY(-1px); border-color: var(--accent); background: var(--surface3); }
+.icon-btn:focus-visible, .toggle-all-btn:focus-visible, .search-bar input:focus-visible, .sidebar-link:focus-visible, .formula-header:focus-visible, .excel-card-header:focus-visible {
+  outline: 2px solid rgba(0,212,255,0.8);
+  outline-offset: 2px;
+}
+.hero-actions {
+  display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap;
+}
+.hero-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.18);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: .82rem;
+}
+.quick-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 28px;
+}
+.quick-card {
+  background: linear-gradient(180deg, var(--surface2), var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+.quick-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.quick-card p { color: var(--text2); font-size: .86rem; }
+.quick-links {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+}
+.quick-link {
+  text-decoration: none;
+  color: var(--text);
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: .8rem;
+}
+.quick-link:hover { border-color: var(--accent); color: var(--accent); }
+
+.guide-banner {
+  background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(0,212,255,.08));
+  border: 1px solid rgba(0,212,255,.18);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+}
+.guide-banner h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+.guide-banner p { color: var(--text2); font-size: .9rem; }
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 16px;
+}
+.compare-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+}
+.compare-card h3 {
+  font-family: 'Syne', sans-serif;
+  margin-bottom: 10px;
+}
+.compare-card ul { padding-left: 18px; color: var(--text2); }
+.compare-card li { margin: 6px 0; }
+
+.syntax-box-wrapper {
+  position: relative;
+}
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 5px 9px;
+  cursor: pointer;
+  font-size: 0.72rem;
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.copy-btn.copied { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.35); color: #86efac; }
+
+.search-empty {
+  display: none;
+  background: rgba(245,158,11,0.08);
+  border: 1px dashed rgba(245,158,11,0.35);
+  color: #fde68a;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 10px 0 20px;
+}
+.search-empty.show { display: block; }
+
+.formula-card.open .formula-body { display: block; }
+.formula-header { outline: none; }
+.formula-header:hover { background: rgba(255,255,255,0.01); }
+.formula-card.open { box-shadow: 0 0 0 1px rgba(0,212,255,0.08) inset; }
+
+.section-note {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.15);
+  color: #bbf7d0;
+  font-size: .85rem;
+}
+
+@media (max-width: 900px) {
+  .quick-panel, .compare-grid { grid-template-columns: 1fr; }
+  .site-header { padding: 0 14px; gap: 10px; }
+  .site-header .header-badge { display: none; }
+  .site-header .header-actions { display: none; }
+}
+
 </style>
 </head>
 <body>
@@ -381,7 +561,7 @@ body {
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Search formulas, shortcuts..." oninput="doSearch(this.value)">
   </div>
-  <div class="header-badge">Complete Guide</div>
+  <div class="header-actions"><button class="toggle-all-btn" id="expandAllBtn" type="button">Expand all</button><button class="toggle-all-btn" id="collapseAllBtn" type="button">Collapse all</button></div><div class="header-badge">Complete Guide</div>
 </header>
 
 <!-- ── LAYOUT ── -->
@@ -456,6 +636,57 @@ body {
     <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Live Examples</div></div>
     <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Shortcuts</div></div>
     <div class="stat"><div class="stat-num">365</div><div class="stat-label">Exclusive Section</div></div>
+  </div>
+</div>
+
+<div class="guide-banner">
+  <h2>Start here</h2>
+  <p>Use the search bar to jump to a function, open any card to read the syntax and examples, then copy formulas with one click. The page is built for learning fast, not just reading.</p>
+</div>
+
+<div class="quick-panel">
+  <div class="quick-card">
+    <h3>Lookup choices</h3>
+    <p>Compare XLOOKUP, FILTER, VLOOKUP, and INDEX/MATCH in one place so users know when each one fits.</p>
+    <div class="quick-links">
+      <a class="quick-link" href="#sec-lookup">Lookup section</a>
+      <a class="quick-link" href="#sec-lookup-compare">Comparison</a>
+    </div>
+  </div>
+  <div class="quick-card">
+    <h3>Excel 365</h3>
+    <p>Dynamic arrays, spill behavior, Power Query, Copilot, and the modern functions that changed the workflow.</p>
+    <div class="quick-links">
+      <a class="quick-link" href="#sec-365-dynarray">Dynamic arrays</a>
+      <a class="quick-link" href="#sec-365-powerquery">Power Query</a>
+    </div>
+  </div>
+  <div class="quick-card">
+    <h3>Best for practice</h3>
+    <p>Each function should show a problem, formula, and result so learners can apply it immediately.</p>
+    <div class="quick-links">
+      <a class="quick-link" href="#f-sum">SUM</a>
+      <a class="quick-link" href="#f-xlookup">XLOOKUP</a>
+      <a class="quick-link" href="#f-filter">FILTER</a>
+    </div>
+  </div>
+</div>
+
+<div class="learning-flow">
+  <div class="flow-card">
+    <div class="flow-step">Step 1</div>
+    <strong>Problem</strong>
+    <p>Start with the task: what does the user actually need to do?</p>
+  </div>
+  <div class="flow-card">
+    <div class="flow-step">Step 2</div>
+    <strong>Formula</strong>
+    <p>Show the exact Excel function or shortcut that solves it.</p>
+  </div>
+  <div class="flow-card">
+    <div class="flow-step">Step 3</div>
+    <strong>Result</strong>
+    <p>Show the output clearly so learners can copy the pattern.</p>
   </div>
 </div>
 
@@ -2424,6 +2655,10 @@ body {
 <div class="cat-header" id="sec-lookup">
   <div class="cat-icon lookup">🔍</div>
   <div class="cat-title">Lookup &amp; Reference Functions</div>
+</div>
+
+<div class="section-note">
+  <strong>Lookup rule:</strong> use <strong>XLOOKUP</strong> for one result, and <strong>FILTER</strong> when duplicates should return all matches. That keeps the guide honest and prevents the “wrong first match” problem.
 </div>
 
 <!-- VLOOKUP -->
@@ -4408,6 +4643,98 @@ const observer = new IntersectionObserver((entries) => {
  'sec-365-powerquery','sec-365-powerpivot','sec-365-copilot','sec-365-newfeatures',
  'sec-excel','sec-shortcuts']
   .forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+// ── COPY SYNTAX ──
+function initCopyButtons() {
+  document.querySelectorAll('.syntax-box').forEach(box => {
+    if (box.dataset.copyReady === '1') return;
+    box.dataset.copyReady = '1';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'syntax-box-wrapper';
+    box.parentNode.insertBefore(wrapper, box);
+    wrapper.appendChild(box);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(box.innerText.trim());
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1200);
+      } catch (e) {
+        btn.textContent = 'Failed';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1200);
+      }
+    });
+    wrapper.appendChild(btn);
+  });
+}
+
+// ── ACCESSIBILITY + SEARCH MESSAGE ──
+function initA11y() {
+  document.querySelectorAll('.formula-header, .excel-card-header').forEach(el => {
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const card = el.parentElement;
+        if (card.classList.contains('formula-card')) toggle(card);
+        if (card.classList.contains('excel-card')) toggleExcel(card);
+      }
+    });
+  });
+  if (!document.getElementById('searchEmpty')) {
+    const empty = document.createElement('div');
+    empty.id = 'searchEmpty';
+    empty.className = 'search-empty';
+    empty.textContent = 'No matching formulas found. Try a different keyword.';
+    document.getElementById('mainContent').insertBefore(empty, document.getElementById('mainContent').children[1]);
+  }
+}
+
+function updateSearchEmpty(show) {
+  const el = document.getElementById('searchEmpty');
+  if (el) el.classList.toggle('show', show);
+}
+
+// Make filtering more useful
+const originalSearch = doSearch;
+doSearch = function(q) {
+  originalSearch(q);
+  const visibleCards = [...document.querySelectorAll('.formula-card, .excel-card')].some(card => card.style.display !== 'none');
+  updateSearchEmpty(!!q && !visibleCards);
+}
+
+// ── OPEN/CLOSE ALL ──
+document.getElementById('expandAllBtn')?.addEventListener('click', () => {
+  document.querySelectorAll('.formula-card, .excel-card').forEach(card => card.classList.add('open'));
+});
+document.getElementById('collapseAllBtn')?.addEventListener('click', () => {
+  document.querySelectorAll('.formula-card, .excel-card').forEach(card => card.classList.remove('open'));
+});
+
+function initProblemBoxes() {
+  document.querySelectorAll('.formula-card').forEach(card => {
+    const body = card.querySelector('.formula-body');
+    if (!body || body.querySelector('.problem-box')) return;
+    const subtitle = card.querySelector('.formula-subtitle')?.textContent?.trim();
+    const desc = body.querySelector('.desc')?.textContent?.trim();
+    const source = subtitle || desc || 'This function solves a common worksheet task.';
+    const box = document.createElement('div');
+    box.className = 'problem-box';
+    box.innerHTML = `<div class="problem-label">Problem</div><div class="problem-text">${source}</div>`;
+    body.insertBefore(box, body.firstChild);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initCopyButtons();
+  initA11y();
+  initProblemBoxes();
+});
+
 </script>
 </body>
 </html>
